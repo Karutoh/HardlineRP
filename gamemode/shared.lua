@@ -6,4 +6,4 @@ GM.Website = "N/A"
 DeriveGamemode("sandbox")
 
 
---Hell world!
+--Hell world! Fuck you world!
