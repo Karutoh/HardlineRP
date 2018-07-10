@@ -4,6 +4,3 @@ GM.Email = "N/A"
 GM.Website = "N/A"
 
 DeriveGamemode("sandbox")
-
-
---Hell world! Fuck you world!
