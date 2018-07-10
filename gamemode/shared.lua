@@ -5,8 +5,5 @@ GM.Website = "N/A"
 
 DeriveGamemode("sandbox")
 
---[[
-function GM:Initialize()
 
-end
-]]--
+--Hell world!
