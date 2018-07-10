@@ -1,0 +1,7 @@
+"testrp"
+{
+	"base"		"sandbox"
+	"title"		"Test RP"
+	"maps"		"^rp_"
+	"menusystem"	"1"
+}
