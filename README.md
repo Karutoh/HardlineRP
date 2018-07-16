@@ -30,4 +30,4 @@ We want to give modders or addon creaters as much control as we can with the gam
 
 # Suggestions
 
-If you have an idea or suggestion you'd like to give us, feel free to leave one in the "Pull Requests".
+If you have an idea or suggestion you'd like to give us, feel free to leave one in the "Issues".
