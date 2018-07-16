@@ -19,8 +19,9 @@ TestRP (temporary) is a new role playing game mode with entirely new mechanics, 
 - Once a player is killed a detective will be able to investigate the scene for clues that lead to the killer
 - Police officers will be harshly demoted for randomly killing or arresting people, if continued will be permanetly banned
 - People who spam a certain amount of props within a time frame will be automaticly kicked also deleting their props (not a ban as this could be accidental)
-- There will be gyms where players can work out to increase their maximum health.
-- Drugs will give advantages, and disadvantages.
+- There will be gyms where players can work out to increase their maximum health
+- Drugs will give advantages, and disadvantages
+- Any bodies within a blast range will be blown to pieces making them unable to be revived
 
 # Suggestions
 
