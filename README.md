@@ -22,6 +22,7 @@ TestRP (temporary) is a new role playing game mode with entirely new mechanics, 
 - There will be gyms where players can work out to increase their maximum health
 - Drugs will give advantages, and disadvantages
 - Any bodies within a blast range will be blown to pieces making them unable to be revived
+- RNG skills
 
 # Suggestions
 
