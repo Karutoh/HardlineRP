@@ -4,7 +4,7 @@ TestRP (temporary) is a new role playing game mode with entirely new mechanics, 
 
 # Modding
 
-We want to give modders or addon creaters as much control as we can with the gamemode, and with that we already starting working on documentation and hooks for just the occasion. You can find the documentation under the "Wiki".
+We want to give modders or addon creaters as much control as we can with the gamemode, and with that we already starting working on documentation for just the occasion. You can find the documentation under the "Wiki".
 
 # Features
 
