@@ -15,6 +15,7 @@ include("jobs/server.lua")
 include("saved_data/server.lua")
 include("administration/server.lua")
 include("f4menu/server.lua")
+include("entity_ownership/server.lua")
 
 function TRP.CheckDir()
     if !file.Exists("trp", "DATA") then
