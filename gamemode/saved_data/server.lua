@@ -1,5 +1,5 @@
 local function DeleteSave(ply)
-    file.Write("trp/player_data/" .. ply:SteamID64() .. ".txt", "")
+    file.Write("trp/player_data/" .. ply:SteamID64() .. "/player_data.txt", "")
 end
 
 local function Load(ply)
@@ -7,7 +7,7 @@ local function Load(ply)
         return false
     end
 
-    local f = file.Open("trp/player_data/" .. ply:SteamID64() .. ".txt", "rb", "DATA")
+    local f = file.Open("trp/player_data/" .. ply:SteamID64() .. "/player_data.txt", "rb", "DATA")
 
     if !f then
         return false
@@ -33,7 +33,7 @@ local function Load(ply)
 end
 
 local function Save(ply)
-    local fName = "trp/player_data/" .. ply:SteamID64() .. ".txt"
+    local fName = "trp/player_data/" .. ply:SteamID64() .. "/player_data.txt"
 
     TRP.CheckDir()
 
