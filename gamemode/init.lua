@@ -6,12 +6,14 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 --AddCSLuaFile("jobs/client.lua")
 AddCSLuaFile("new_life_name/client.lua")
+AddCSLuaFile("f4menu/client.lua")
 
 include("shared.lua")
 --include("new_life_name/server.lua")
 include("jobs/server.lua")
 include("saved_data/server.lua")
 include("administration/server.lua")
+include("f4menu/server.lua")
 
 function TRP.CheckDir()
     if !file.Exists("trp", "DATA") then
