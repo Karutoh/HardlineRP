@@ -1,3 +1,21 @@
+surface.CreateFont("HUD", {
+	font = "Arial",
+	extended = false,
+	size = 13,
+	weight = 500,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = false,
+	outline = false,
+})
+
 include("shared.lua")
 --include("jobs/client.lua")
 include("new_life_name/client.lua")
@@ -27,6 +45,7 @@ local function DrawInfo()
     surface.SetDrawColor(0, 0, 0, 127)
     surface.DrawRect(10, ScrH() - 110, 200, 100)
 
+    surface.SetFont("HUD")
     surface.SetTextColor(255, 255, 255)
     surface.SetTextPos(15, ScrH() - 105)
     surface.DrawText("Steam Name: " .. LocalPlayer():Name())
