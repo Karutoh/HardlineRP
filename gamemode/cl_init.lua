@@ -1,6 +1,7 @@
 include("shared.lua")
 --include("jobs/client.lua")
 include("new_life_name/client.lua")
+include("f4menu/client.lua")
 
 function CreateMsgBox(msg)
     local infoF = vgui.Create("DFrame")
@@ -50,3 +51,15 @@ local hide = {
 hook.Add( "HUDShouldDraw", "HideHUD", function( name )
 	if ( hide[ name ] ) then return false end
 end )
+
+local mouseActive = false
+
+net.Receive( "enablemouse", function( len, ply ) 
+	if(!mouseActive) then
+		gui.EnableScreenClicker( true )
+		mouseActive = true
+	else
+		gui.EnableScreenClicker( false )
+		mouseActive = false
+	end
+end)

@@ -94,10 +94,10 @@ hook.Add("PostPlayerDraw", "TRP_RpNameplate", function (ply)
             if ply:GetFriendStatus() == "friend" then
                 plate = plate .. " - (a.k.a. " .. ply:Name() .. ")"
             end
-
+            
             surface.SetFont("HudSelectionText")
-            local w, h = surface.GetTextSize(plate)
-
+			local w, h = surface.GetTextSize(plate)
+			
             surface.SetDrawColor(0, 0, 0, 127)
             surface.DrawRect(-w / 2 - 5, -5, w + 10, h + 10)
 
