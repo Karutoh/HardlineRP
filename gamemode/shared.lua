@@ -4,3 +4,5 @@ GM.Email = "Red-XIII@outlook.com"
 GM.Website = "https://discord.gg/YwhF6Yw"
 
 DeriveGamemode("sandbox")
+
+TRP = {}

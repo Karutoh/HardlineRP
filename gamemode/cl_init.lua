@@ -1,5 +1,6 @@
 include("shared.lua")
 include("new_life_name/client.lua")
+include("jobs/client.lua")
 
 function CreateMsgBox(msg)
     local infoF = vgui.Create("DFrame")
@@ -20,3 +21,32 @@ function CreateMsgBox(msg)
 
     return infoF
 end
+
+local function DrawInfo()
+    surface.SetDrawColor(0, 0, 0, 127)
+    surface.DrawRect(10, ScrH() - 110, 200, 100)
+
+    surface.SetTextColor(255, 255, 255)
+    surface.SetTextPos(15, ScrH() - 105)
+    surface.DrawText("Steam Name: " .. LocalPlayer():Name())
+
+    surface.SetTextPos(15, ScrH() - 90)
+    surface.DrawText("RP Name: " .. LocalPlayer():GetNWString("rpName"))
+end
+
+function GM:HUDPaint()
+    DrawInfo()
+end
+
+local hide = {
+	["CHudHealth"] = true,
+    ["CHudBattery"] = true,
+    ["CHudCrosshair"] = true,
+    ["CHudHealth"] = true,
+    ["CHudAmmo"] = true,
+    ["CHudSecondaryAmmo"] = true
+}
+
+hook.Add( "HUDShouldDraw", "HideHUD", function( name )
+	if ( hide[ name ] ) then return false end
+end )

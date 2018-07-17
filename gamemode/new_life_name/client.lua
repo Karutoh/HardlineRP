@@ -1,5 +1,3 @@
-local rpName = ""
-
 local function OpenNewLifeName()
     local frame = vgui.Create("DFrame")
     frame:SetDeleteOnClose(true)
@@ -26,21 +24,31 @@ local function OpenNewLifeName()
     submit:SetPos(frame:GetWide() / 2 - submit:GetWide() / 2, 120)
     function submit:DoClick()
         if string.len(name:GetText()) > 0 then
-            if name:GetText() == LocalPlayer():GetNWString("rpName") then
+            if string.len(name:GetText()) > 64 then
                 frame:SetVisible(false)
 
-                local infoF = CreateMsgBox("You cannot use the last rp name.")
+                local infoF = CreateMsgBox("You cannot use a name larger than 64 characters.")
     
                 function infoF:OnClose()
                     frame:SetVisible(true)
                 end
             else
-                frame:Close()
+                if name:GetText() == LocalPlayer():GetNWString("rpName") then
+                    frame:SetVisible(false)
 
-                net.Start("TRP_RpName")
-                net.WriteString(LocalPlayer():SteamID64())
-                net.WriteString(name:GetText())
-                net.SendToServer()
+                    local infoF = CreateMsgBox("You cannot use the last rp name.")
+        
+                    function infoF:OnClose()
+                        frame:SetVisible(true)
+                    end
+                else
+                    frame:Close()
+
+                    net.Start("TRP_RpName")
+                    net.WriteString(LocalPlayer():SteamID64())
+                    net.WriteString(name:GetText())
+                    net.SendToServer()
+                end
             end
         else
             frame:SetVisible(false)
@@ -55,3 +63,48 @@ local function OpenNewLifeName()
 end
 
 net.Receive("TRP_New", OpenNewLifeName)
+
+hook.Add("PostPlayerDraw", "TRP_RpNameplate", function (ply)
+    if !IsValid(ply) then
+        return
+    end
+
+    if ply == LocalPlayer() then
+        return
+    end
+
+    if !ply:Alive() then
+        return
+    end
+
+	local Distance = LocalPlayer():GetPos():Distance(ply:GetPos())
+
+	if Distance < 1000 then
+
+		local offset = Vector(0, 0, 85)
+		local ang = LocalPlayer():EyeAngles()
+		local pos = ply:GetPos() + offset + ang:Up()
+
+		ang:RotateAroundAxis(ang:Forward(), 90)
+		ang:RotateAroundAxis(ang:Right(), 90)
+
+
+        cam.Start3D2D(pos, Angle(0, ang.y, 90), 0.25)
+            local plate = ply:GetNWString("rpName")
+            if ply:GetFriendStatus() == "friend" then
+                plate = plate .. " - (a.k.a. " .. ply:Name() .. ")"
+            end
+
+            surface.SetDrawColor(0, 0, 0, 127)
+            surface.DrawRect(-w / 2 - 5, -5, w + 10, h + 10)
+
+            surface.SetFont("HudSelectionText")
+            local w, h = surface.GetTextSize(plate)
+
+            surface.SetTextColor(255, 255, 255)
+            surface.SetTextPos(-w / 2, 0)
+            surface.DrawText(plate)
+
+		cam.End3D2D()
+	end
+end)
