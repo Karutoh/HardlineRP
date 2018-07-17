@@ -80,29 +80,28 @@ hook.Add("PostPlayerDraw", "TRP_RpNameplate", function (ply)
 	local Distance = LocalPlayer():GetPos():Distance(ply:GetPos())
 
 	if Distance < 1000 then
+        local offset = Vector(0, 0, 85)
+        local ang = LocalPlayer():EyeAngles()
+        local pos = ply:GetPos() + offset + ang:Up()
 
-		local offset = Vector(0, 0, 85)
-		local ang = LocalPlayer():EyeAngles()
-		local pos = ply:GetPos() + offset + ang:Up()
-
-		ang:RotateAroundAxis(ang:Forward(), 90)
-		ang:RotateAroundAxis(ang:Right(), 90)
+        ang:RotateAroundAxis(ang:Forward(), 90)
+        ang:RotateAroundAxis(ang:Right(), 90)
 
         cam.Start3D2D(pos, Angle(0, ang.y, 90), 0.25)
             local plate = ply:GetNWString("rpName")
             if ply:GetFriendStatus() == "friend" then
                 plate = plate .. " - (a.k.a. " .. ply:Name() .. ")"
             end
-            
+
             surface.SetFont("HudSelectionText")
             local w, h = surface.GetTextSize(plate)
-			
+
             surface.SetDrawColor(0, 0, 0, 127)
             surface.DrawRect(-w / 2 - 5, -5, w + 10, h + 10)
 
             surface.SetTextColor(255, 255, 255)
             surface.SetTextPos(-w / 2, 0)
             surface.DrawText(plate)
-		cam.End3D2D()
-	end
+        cam.End3D2D()
+    end
 end)
