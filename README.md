@@ -26,6 +26,7 @@ We want to give modders or addon creaters as much control as we can with the gam
 - There will be gyms where players can work out to increase their maximum health but will take energy
 - Drugs will give advantages, and disadvantages
 - Any bodies within a blast range will be blown to pieces making them unable to be revived
+- Sleeping to regain your energy, Will probably take a few minutes depending on the rate
 - RNG skills
 
 # Suggestions
