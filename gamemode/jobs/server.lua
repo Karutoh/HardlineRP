@@ -1,31 +1,49 @@
 local jobs = {}
 
-local function TRP.FindRank(rank, rankTable)
-    if rankTable[1] == rank then
+function TRP.FindRank(rank, rankTable)
+    if rankTable.title == rank then
         return rankTable
     end
 
-    for r = 1, #rankTable[5] do
-        return TRP.FindRank(rank, rankTable[5][r])
+    for r = 1, #rankTable.promotions do
+        return TRP.FindRank(rank, rankTable.promotions[r])
     end
 
     return nil
 end
 
-function TRP.AddJobCategory(category, desc)
-    table.insert(jobs, { category, desc, {} })
+function TRP.JobRank(rankTitle)
+    return {
+        title = rankTitle,
+        description = "",
+        dailySalary = 0,
+        loadout = {},
+        requiredExp = {},
+        promotions = {}
+    }
 end
 
-function TRP.AddJobTitle(category, title, abbreviation, desc)
-    for i = 1, #jobs do
-        if jobs[i][1] == category then
-            for t = 1, #jobs[i][3] do
-                if jobs[i][3][t][1] == title then
+function TRP.AddJobCategory(jobCategory, desc)
+    for c = 1, #jobs do
+        if jobs[c].title == category then
+            return false
+        end
+    end
+
+    table.insert(jobs, { title = category, description = desc, jobTitles = {} })
+    return true
+end
+
+function TRP.AddJobTitle(jobCategory, jobTitle, abbr, desc)
+    for c = 1, #jobs do
+        if jobs[c].title == jobCategory then
+            for t = 1, #jobs[c].jobTitles do
+                if jobs[c].jobTitles[t].title == title then
                     return false
                 end
             end
 
-            table.insert(jobs[i][3], { title, abbreviation, desc, {} })
+            table.insert(jobs[c].jobTitles, { title = jobTitle, abbreviation = abbr, description = desc, jobRanks = {} })
             return true
         end
     end
@@ -33,18 +51,18 @@ function TRP.AddJobTitle(category, title, abbreviation, desc)
     return false
 end
 
-function TRP.AddRank(category, title, rank)
+function TRP.AddJobRank(jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
-        if jobs[i][1] == category then
-            for t = 1, #jobs[i][3] do
-                if jobs[i][3][t][1] == title then
-                    for r = 1, #jobs[i][3][t][4] do
-                        if jobs[i][3][t][4][r][1] == rank[1] then
+        if jobs[c].title == jobCategory then
+            for t = 1, #jobs[c].jobTitles do
+                if jobs[c].jobTitles[t].title == jobTitle then
+                    for r = 1, #jobs[c].jobTitles[t].jobRanks do
+                        if jobs[c].jobTitles[t].jobRanks[r].title == jobRank.title then
                             return false
                         end
                     end
 
-                    table.insert(jobs[i][3][t][4], rank)
+                    table.insert(jobs[c].jobTitles[t].jobRanks, rank)
                     return true
                 end
             end
@@ -64,7 +82,7 @@ function TRP.GetJobCategories()
     return categories
 end
 
-function TRP.GetJobTitles(category)
+function TRP.GetJobTitles(jobCategory)
     local titles = {}
 
     for c = 1, #jobs do
@@ -76,7 +94,7 @@ function TRP.GetJobTitles(category)
     return titles
 end
 
-function TRP.GetRank(category, title, rank)
+function TRP.GetJobRank(jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
         if jobs[c][1] == category then
             for t = 1, #jobs[c][3] do

@@ -1,6 +1,6 @@
 include("shared.lua")
+--include("jobs/client.lua")
 include("new_life_name/client.lua")
-include("jobs/client.lua")
 
 function CreateMsgBox(msg)
     local infoF = vgui.Create("DFrame")

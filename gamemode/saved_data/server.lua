@@ -1,23 +1,13 @@
-local function CheckDir()
-    if !file.Exists("TRP_PlayerData", "DATA") then
-        file.CreateDir("TRP_PlayerData")
-
-        return false
-    end
-
-    return true
-end
-
 local function DeleteSave(ply)
-    file.Write("TRP_PlayerData/" .. ply:SteamID64() .. ".txt", "")
+    file.Write("trp/player_data/" .. ply:SteamID64() .. ".txt", "")
 end
 
 local function Load(ply)
-    if !CheckDir() then
+    if !TRP.CheckDir() then
         return false
     end
 
-    local f = file.Open("TRP_PlayerData/" .. ply:SteamID64() .. ".txt", "rb", "DATA")
+    local f = file.Open("trp/player_data/" .. ply:SteamID64() .. ".txt", "rb", "DATA")
 
     if !f then
         return false
@@ -31,6 +21,10 @@ local function Load(ply)
 
     ply:SetNWString("rpName", f:Read(f:ReadULong()))
 
+    if !TRP.SetPlayerAdminRank(ply, f:Read(f:ReadULong()) or "") then
+        ply:ChatPrint("Server - Loaded admin rank, but it does not exist.")
+    end
+
     hook.Call("TRP_LoadPlayerData", f, ply)
 
     f:Close()
@@ -39,9 +33,9 @@ local function Load(ply)
 end
 
 local function Save(ply)
-    local fName = "TRP_PlayerData/" .. ply:SteamID64() .. ".txt"
+    local fName = "trp/player_data/" .. ply:SteamID64() .. ".txt"
 
-    CheckDir()
+    TRP.CheckDir()
 
     local f = file.Open(fName, "wb", "DATA")
 
@@ -57,10 +51,13 @@ local function Save(ply)
         return Save(ply)
     end
 
-    local n = ply:GetNWString("rpName")
+    local rpName = ply:GetNWString("rpName")
+    f:WriteULong(string.len(rpName))
+    f:Write(rpName)
 
-    f:WriteULong(string.len(n))
-    f:Write(n)
+    local adminR = ply:GetNWString("adminRank")
+    f:WriteULong(string.len(adminR))
+    f:Write(adminR)
 
     hook.Call("TRP_SavePlayerData", f, ply)
 
@@ -71,6 +68,9 @@ local function Save(ply)
 end
 
 hook.Add("PlayerInitialSpawn", "TRP_SavePlayerData", function (ply)
+    ply:SetNWString("adminRank", "")
+    ply:SetNWString("rpName", "")
+
     if Load(ply) then
         net.Start("TRP_Loaded")
         net.WriteString(ply:GetNWString("rpName"))
