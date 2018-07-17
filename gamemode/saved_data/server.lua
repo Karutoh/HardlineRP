@@ -1,9 +1,21 @@
+local function CheckPlyDir(ply)
+    local b = TRP.CheckDir()
+    local d = "trp/player_data/" .. ply:SteamID64()
+
+    if !file.Exists(d, "DATA") then
+        file.CreateDir(d)
+        b = false
+    end
+
+    return b
+end
+
 local function DeleteSave(ply)
     file.Write("trp/player_data/" .. ply:SteamID64() .. "/player_data.txt", "")
 end
 
 local function Load(ply)
-    if !TRP.CheckDir() then
+    if !CheckPlyDir then
         return false
     end
 
@@ -35,7 +47,7 @@ end
 local function Save(ply)
     local fName = "trp/player_data/" .. ply:SteamID64() .. "/player_data.txt"
 
-    TRP.CheckDir()
+    CheckPlyDir
 
     local f = file.Open(fName, "wb", "DATA")
 
