@@ -8,7 +8,7 @@ Currently only works in Multi-Player. Single-Player will come later.
 
 # Modding
 
-We want to give modders or addon creaters as much control as we can with the gamemode, and with that we already starting working on documentation for just the occasion. You can find the documentation under the "Wiki".
+We want to give modders or addon creaters as much control as we can with the gamemode, and with that we already started working on documentation for just the occasion. You can find the documentation under the "Wiki".
 
 # Features
 
