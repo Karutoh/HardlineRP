@@ -2,6 +2,10 @@
 
 A new role playing game mode with entirely new mechanics for Garry's Mod. For now the development of this game mode is only really an experiment but could later change depending how well it performs.
 
+# Warning
+
+Currently only works in Multi-Player. Single-Player will come later.
+
 # Modding
 
 We want to give modders or addon creaters as much control as we can with the gamemode, and with that we already starting working on documentation for just the occasion. You can find the documentation under the "Wiki".
