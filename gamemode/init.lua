@@ -1,6 +1,7 @@
 util.AddNetworkString("TRP_Loaded")
 util.AddNetworkString("TRP_RpName")
 util.AddNetworkString("TRP_New")
+util.AddNetworkString( "enablemouse" )
 
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
@@ -26,4 +27,9 @@ function TRP.CheckDir()
     end
 
     return true
+end
+
+function GM:ShowSpare1( ply )
+	net.Start( "enablemouse" )
+	net.Send( ply )
 end

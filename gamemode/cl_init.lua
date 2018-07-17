@@ -51,3 +51,15 @@ local hide = {
 hook.Add( "HUDShouldDraw", "HideHUD", function( name )
 	if ( hide[ name ] ) then return false end
 end )
+
+local mouseActive = false
+
+net.Receive( "enablemouse", function( len, ply ) 
+	if(!mouseActive) then
+		gui.EnableScreenClicker( true )
+		mouseActive = true
+	else
+		gui.EnableScreenClicker( false )
+		mouseActive = false
+	end
+end)
