@@ -8,7 +8,7 @@ We want to give modders or addon creaters as much control as we can with the gam
 
 # Features
 
-- Softcore/Hardcore
+- Hardcore/Softcore
   - Hardcore
     - One life, new life
     - Job experiences reset upon death
