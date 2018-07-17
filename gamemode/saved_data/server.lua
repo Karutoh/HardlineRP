@@ -15,7 +15,7 @@ local function DeleteSave(ply)
 end
 
 local function Load(ply)
-    if !CheckPlyDir then
+    if !CheckPlyDir(ply) then
         return false
     end
 
@@ -47,7 +47,7 @@ end
 local function Save(ply)
     local fName = "trp/player_data/" .. ply:SteamID64() .. "/player_data.txt"
 
-    CheckPlyDir
+    CheckPlyDir(ply)
 
     local f = file.Open(fName, "wb", "DATA")
 
