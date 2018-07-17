@@ -1,6 +1,6 @@
 # About
 
-TestRP (temporary) is a new role playing game mode with entirely new mechanics, for now the development of this gamemode is only really an experiment but could later change depending how well it performs.
+A new role playing game mode with entirely new mechanics, for now the development of this gamemode is only really an experiment but could later change depending how well it performs.
 
 # Modding
 
