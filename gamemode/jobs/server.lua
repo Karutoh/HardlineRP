@@ -1,5 +1,11 @@
 local jobs = {}
 
+hook.Add("TRP_InitPlayerData", "TRP_InitJobInfo", function (ply)
+    ply:SetNWString("jobCategory", "")
+    ply:SetNWString("jobTitle", "")
+    ply:SetNWString("jobRank", "")
+end)
+
 function TRP.FindRank(rank, rankTable)
     if rankTable.title == rank then
         return rankTable

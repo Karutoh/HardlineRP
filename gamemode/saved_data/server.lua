@@ -31,13 +31,11 @@ local function Load(ply)
         return false
     end
 
-    ply:SetNWString("rpName", f:Read(f:ReadULong()))
-
     if !TRP.SetPlayerAdminRank(ply, f:Read(f:ReadULong()) or "") then
         ply:ChatPrint("Server - Loaded admin rank, but it does not exist.")
     end
 
-    hook.Call("TRP_LoadPlayerData", f, ply)
+    hook.Call("TRP_LoadPlayerData", nil, f, ply)
 
     f:Close()
 
@@ -63,15 +61,11 @@ local function Save(ply)
         return Save(ply)
     end
 
-    local rpName = ply:GetNWString("rpName")
-    f:WriteULong(string.len(rpName))
-    f:Write(rpName)
-
     local adminR = ply:GetNWString("adminRank")
     f:WriteULong(string.len(adminR))
     f:Write(adminR)
 
-    hook.Call("TRP_SavePlayerData", f, ply)
+    hook.Call("TRP_SavePlayerData", nil, f, ply)
 
     f:Flush()
     f:Close()
@@ -80,8 +74,7 @@ local function Save(ply)
 end
 
 hook.Add("PlayerInitialSpawn", "TRP_SavePlayerData", function (ply)
-    ply:SetNWString("adminRank", "")
-    ply:SetNWString("rpName", "")
+    hook.Call("TRP_InitPlayerData", nil, ply)
 
     if Load(ply) then
         net.Start("TRP_Loaded")

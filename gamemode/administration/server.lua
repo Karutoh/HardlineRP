@@ -1,3 +1,17 @@
+hook.Add("TRP_LoadPlayerData", "TRP_SaveAdminRank", function (f, ply)
+    ply:SetNWString("adminRank", f:Read(f:ReadULong()))
+end)
+
+hook.Add("TRP_SavePlayerData", "TRP_SaveAdminRank", function (f, ply)
+    local adminRank = ply:GetNWString("adminRank")
+    f:WriteULong(string.len(adminRank))
+    f:Write(adminRank)
+end)
+
+hook.Add("TRP_InitPlayerData", "TRP_InitAdminRank", function (ply)
+    ply:SetNWString("adminRank", "")
+end)
+
 local ranks = {}
 
 local function Load()

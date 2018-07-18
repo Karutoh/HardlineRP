@@ -9,14 +9,16 @@ AddCSLuaFile("entity_ownership/shared.lua")
 
 include("shared.lua")
 include("network_strings.lua")
---include("new_life_name/server.lua")
 include("jobs/server.lua")
+include("default_jobs.lua")
+--include("new_life_name/server.lua")
 include("saved_data/server.lua")
 include("administration/server.lua")
 include("entity_ownership/server.lua")
 include("entity_ownership/shared.lua")
-include("jobs.lua")
+include("new_life_name/server.lua")
 include("f4menu/server.lua")
+include("money/server.lua")
 
 function TRP.CheckDir()
     if !file.Exists("trp", "DATA") then
