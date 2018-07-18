@@ -38,3 +38,7 @@ function GM:ShowSpare1( ply )
 	net.Start( "TRP_EnableMouse" )
 	net.Send( ply )
 end
+
+function GM:GravGunPunt( ply, ent )
+	return false
+end
