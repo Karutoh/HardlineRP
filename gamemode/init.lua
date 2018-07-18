@@ -1,8 +1,3 @@
-util.AddNetworkString("TRP_Loaded")
-util.AddNetworkString("TRP_RpName")
-util.AddNetworkString("TRP_New")
-util.AddNetworkString("TRP_EnableMouse")
-
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("fonts.lua")
@@ -13,6 +8,7 @@ AddCSLuaFile("f4menu/client.lua")
 AddCSLuaFile("entity_ownership/shared.lua")
 
 include("shared.lua")
+include("network_strings.lua")
 --include("new_life_name/server.lua")
 include("jobs/server.lua")
 include("saved_data/server.lua")
