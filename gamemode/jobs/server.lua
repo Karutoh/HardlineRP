@@ -82,7 +82,7 @@ function TRP.GetJobCategories()
     local categories = {}
 
     for c = 1, #jobs do
-        table.insert(categories, jobs[c][1])
+        table.insert(categories, jobs[c].title)
     end
 
     return categories
@@ -92,8 +92,8 @@ function TRP.GetJobTitles(jobCategory)
     local titles = {}
 
     for c = 1, #jobs do
-        for t = 1, #jobs[c][3] do
-            table.insert(titles, jobs[c][3][t][1])
+        for t = 1, #jobs[c].jobTitles do
+            table.insert(titles, jobs[c].jobTitles[t].tite)
         end
     end
 
@@ -102,11 +102,11 @@ end
 
 function TRP.GetJobRank(jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
-        if jobs[c][1] == category then
-            for t = 1, #jobs[c][3] do
-                if jobs[c][3][t][1] == title then
-                    for r = 1, #jobs[c][3][t][4] do
-                        return TRP.FindRank(rank, jobs[c][3][t][4][r])
+        if jobs[c].title == jobCategory then
+            for t = 1, #jobs[c].jobTitles do
+                if jobs[c].jobTitles[t].title == title then
+                    for r = 1, #jobs[c].jobTitles[t].jobRanks do
+                        return TRP.FindRank(rank, jobs[c].jobTitles[t].jobRanks[r])
                     end
                 end
             end
