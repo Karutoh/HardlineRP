@@ -47,7 +47,6 @@ local function Load()
 
         table.insert(ranks, rank)
     end
-
     f:Close()
 
     return true

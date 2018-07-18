@@ -31,12 +31,12 @@ end
 
 function TRP.AddJobCategory(jobCategory, desc)
     for c = 1, #jobs do
-        if jobs[c].title == category then
+        if jobs[c].title == jobCategory then
             return false
         end
     end
 
-    table.insert(jobs, { title = category, description = desc, jobTitles = {} })
+    table.insert(jobs, { title = jobCategory, description = desc, jobTitles = {} })
     return true
 end
 
