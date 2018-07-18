@@ -1,4 +1,4 @@
-hook.Add("TRP_LoadPlayerData", "TRP_SaveMoney", function (f, ply)
+hook.Add("TRP_LoadPlayerData", "TRP_LoadMoney", function (f, ply)
     ply:SetNWInt("money", f:ReadLong())
 end)
 

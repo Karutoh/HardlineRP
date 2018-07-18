@@ -1,4 +1,4 @@
-hook.Add("TRP_LoadPlayerData", "TRP_SaveRpName", function (f, ply)
+hook.Add("TRP_LoadPlayerData", "TRP_LoadRpName", function (f, ply)
     ply:SetNWString("rpName", f:Read(f:ReadULong()))
 end)
 

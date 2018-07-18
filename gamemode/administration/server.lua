@@ -1,4 +1,4 @@
-hook.Add("TRP_LoadPlayerData", "TRP_SaveAdminRank", function (f, ply)
+hook.Add("TRP_LoadPlayerData", "TRP_LoadAdminRank", function (f, ply)
     ply:SetNWString("adminRank", f:Read(f:ReadULong()))
 end)
 
