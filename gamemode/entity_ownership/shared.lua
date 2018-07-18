@@ -1,7 +1,7 @@
 hook.Add("PhysgunPickup", "TRP_PropBlock", function (ply, ent)
-    if !ent:IsPlayer() && ply:SteamID64() == ent:GetNWString("owner") then
-        return true
+    if ent:IsPlayer() || ply:SteamID64() != ent:GetNWString("owner") then
+        return false
     end
 
-    return false
+    return true
 end)
