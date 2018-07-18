@@ -151,8 +151,13 @@ end
 
 vgui.Register( "f4menu", PANEL, "DPanel" )
 
+<<<<<<< HEAD
 net.Receive( "f4menu", function() 
 	jobstbl = net.ReadTable()
+=======
+net.Receive( "TRP_F4Menu", function() 
+	
+>>>>>>> 0f40f86f45d1a214fd6f2d89bb79a02b9cdf5c4d
 	showMenu()
 
 end)
