@@ -8,6 +8,9 @@ AddCSLuaFile("f4menu/client.lua")
 AddCSLuaFile("entity_ownership/shared.lua")
 
 include("shared.lua")
+
+TRP.defaultJobs = true
+
 include("network_strings.lua")
 include("jobs/server.lua")
 include("default_jobs.lua")

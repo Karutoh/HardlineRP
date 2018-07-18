@@ -28,7 +28,7 @@ end
 
 local mouseActive = false
 
-net.Receive( "enablemouse", function( len, ply ) 
+net.Receive( "TRP_EnableMouse", function( len, ply ) 
 	if(!mouseActive) then
 		gui.EnableScreenClicker( true )
 		mouseActive = true

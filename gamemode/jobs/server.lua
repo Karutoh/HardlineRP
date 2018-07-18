@@ -3,7 +3,7 @@ local jobs = {}
 hook.Add("TRP_InitPlayerData", "TRP_InitJobInfo", function (ply)
     ply:SetNWString("jobCategory", "")
     ply:SetNWString("jobTitle", "")
-    ply:SetNWString("jobRank", "")
+    ply:SetNWString("jobRank", "")z
 end)
 
 function TRP.FindRank(rank, rankTable)
