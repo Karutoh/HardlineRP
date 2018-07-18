@@ -65,7 +65,7 @@ end
 
 vgui.Register( "f4menu", PANEL, "DPanel" )
 
-net.Receive( "f4menu", function() 
+net.Receive( "TRP_F4Menu", function() 
 	
 	showMenu()
 

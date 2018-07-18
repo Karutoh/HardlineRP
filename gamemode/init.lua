@@ -1,13 +1,15 @@
 util.AddNetworkString("TRP_Loaded")
 util.AddNetworkString("TRP_RpName")
 util.AddNetworkString("TRP_New")
-util.AddNetworkString( "enablemouse" )
+util.AddNetworkString("TRP_EnableMouse")
 
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
+AddCSLuaFile("fonts.lua")
 --AddCSLuaFile("jobs/client.lua")
 AddCSLuaFile("new_life_name/client.lua")
 AddCSLuaFile("f4menu/client.lua")
+AddCSLuaFile("entity_ownership/shared.lua")
 
 include("shared.lua")
 --include("new_life_name/server.lua")
@@ -16,6 +18,7 @@ include("saved_data/server.lua")
 include("administration/server.lua")
 include("f4menu/server.lua")
 include("entity_ownership/server.lua")
+include("entity_ownership/shared.lua")
 
 function TRP.CheckDir()
     if !file.Exists("trp", "DATA") then
@@ -31,6 +34,6 @@ function TRP.CheckDir()
 end
 
 function GM:ShowSpare1( ply )
-	net.Start( "enablemouse" )
+	net.Start( "TRP_EnableMouse" )
 	net.Send( ply )
 end

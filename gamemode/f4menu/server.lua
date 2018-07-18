@@ -1,6 +1,6 @@
-util.AddNetworkString( "f4menu" )
+util.AddNetworkString( "TRP_F4Menu" )
 
 function GM:ShowSpare2( ply )
-	net.Start( "f4menu" )
+	net.Start( "TRP_F4Menu" )
 	net.Send( ply )
 end
