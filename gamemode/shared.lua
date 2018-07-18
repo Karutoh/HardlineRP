@@ -6,3 +6,4 @@ GM.Website = "https://discord.gg/YwhF6Yw"
 DeriveGamemode("sandbox")
 
 TRP = {}
+TRP.defaultJobs = true

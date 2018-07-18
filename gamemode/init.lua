@@ -13,9 +13,10 @@ include("network_strings.lua")
 include("jobs/server.lua")
 include("saved_data/server.lua")
 include("administration/server.lua")
-include("f4menu/server.lua")
 include("entity_ownership/server.lua")
 include("entity_ownership/shared.lua")
+include("jobs.lua")
+include("f4menu/server.lua")
 
 function TRP.CheckDir()
     if !file.Exists("trp", "DATA") then
