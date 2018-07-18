@@ -19,7 +19,7 @@ We want to give modders or addon creators as much control as we can with the gam
     - Drop all money upon death, even from bank
     - Max health and energy reset to default upon death
   - Softcore
-    - Drop some money upon death
+    - Drop all money only in inventory upon death
     - Lose some maximum health and energy upon death
 - Can be revived by medic, but must be maintained with C.P.R. until then
 - All criminals can randomly kill people
