@@ -14,34 +14,6 @@ local function DeleteSave(ply)
     file.Write("trp/player_data/" .. ply:SteamID64() .. "/player_data.txt", "")
 end
 
-local function Load(ply)
-    if !CheckPlyDir(ply) then
-        return false
-    end
-
-    local f = file.Open("trp/player_data/" .. ply:SteamID64() .. "/player_data.txt", "rb", "DATA")
-
-    if !f then
-        return false
-    end
-
-    if f:Size() == 0 then
-        f:Close()
-
-        return false
-    end
-
-    if !TRP.SetPlayerAdminRank(ply, f:Read(f:ReadULong()) or "") then
-        ply:ChatPrint("Server - Loaded admin rank, but it does not exist.")
-    end
-
-    hook.Call("TRP_LoadPlayerData", nil, f, ply)
-
-    f:Close()
-
-    return true
-end
-
 local function Save(ply)
     local fName = "trp/player_data/" .. ply:SteamID64() .. "/player_data.txt"
 
@@ -68,6 +40,34 @@ local function Save(ply)
     hook.Call("TRP_SavePlayerData", nil, f, ply)
 
     f:Flush()
+    f:Close()
+
+    return true
+end
+
+local function Load(ply)
+    if !CheckPlyDir(ply) then
+        return false
+    end
+
+    local f = file.Open("trp/player_data/" .. ply:SteamID64() .. "/player_data.txt", "rb", "DATA")
+
+    if !f then
+        return false
+    end
+
+    if f:Size() == 0 then
+        f:Close()
+
+        return false
+    end
+
+    if !TRP.SetPlayerAdminRank(ply, f:Read(f:ReadULong()) or "") then
+        ply:ChatPrint("Server - Loaded admin rank, but it does not exist.")
+    end
+
+    hook.Call("TRP_LoadPlayerData", nil, f, ply)
+
     f:Close()
 
     return true

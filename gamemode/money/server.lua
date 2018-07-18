@@ -1,9 +1,9 @@
-hook.Add("TRP_LoadPlayerData", "TRP_LoadMoney", function (f, ply)
-    ply:SetNWInt("money", f:ReadLong())
+hook.Add("TRP_SavePlayerData", "TRP_CacheMoney", function (f, ply)
+    f:WriteLong(ply:GetNWInt("money"))
 end)
 
-hook.Add("TRP_SavePlayerData", "TRP_SaveMoney", function (f, ply)
-    f:WriteLong(ply:GetNWInt("money"))
+hook.Add("TRP_LoadPlayerData", "TRP_CacheMoney", function (f, ply)
+    ply:SetNWInt("money", f:ReadLong())
 end)
 
 hook.Add("TRP_InitPlayerData", "TRP_InitMoney", function (ply)

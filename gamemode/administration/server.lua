@@ -1,11 +1,11 @@
-hook.Add("TRP_LoadPlayerData", "TRP_LoadAdminRank", function (f, ply)
-    ply:SetNWString("adminRank", f:Read(f:ReadULong()))
-end)
-
-hook.Add("TRP_SavePlayerData", "TRP_SaveAdminRank", function (f, ply)
+hook.Add("TRP_SavePlayerData", "TRP_CacheAdminRank", function (f, ply)
     local adminRank = ply:GetNWString("adminRank")
     f:WriteULong(string.len(adminRank))
     f:Write(adminRank)
+end)
+
+hook.Add("TRP_LoadPlayerData", "TRP_CacheAdminRank", function (f, ply)
+    ply:SetNWString("adminRank", f:Read(f:ReadULong()))
 end)
 
 hook.Add("TRP_InitPlayerData", "TRP_InitAdminRank", function (ply)
