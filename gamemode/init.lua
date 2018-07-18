@@ -34,3 +34,7 @@ function GM:ShowSpare1( ply )
 	net.Start( "enablemouse" )
 	net.Send( ply )
 end
+
+function GM:GravGunPunt( ply, ent )
+	return false
+end
