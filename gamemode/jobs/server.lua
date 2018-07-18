@@ -68,7 +68,8 @@ function TRP.AddJobRank(jobCategory, jobTitle, jobRank)
                         end
                     end
 
-                    table.insert(jobs[c].jobTitles[t].jobRanks, rank)
+                    table.insert(jobs[c].jobTitles[t].jobRanks, jobRank)
+
                     return true
                 end
             end
