@@ -29,6 +29,28 @@ function TRP.JobRank(rankTitle)
     }
 end
 
+function TRP.SetPlayerJob(ply, jobCategory, jobTitle, jobRank)
+    for c = 1, #jobs do
+        if jobs[c].title == jobCategory then
+            for t = 1, #jobs[c].jobTitles do
+                if jobs[c].jobTitles[t].title == jobTitle then
+                    for r = 1, #jobs[c].jobTitles[t].jobRanks do
+                        if jobs[c].jobTitles[t].jobRanks[r].title == jobRank.title then
+                            ply:SetNWString("jobCategory", jobCategory)
+                            ply:SetNWString("jobTitle", jobTitle)
+                            ply:SetNWString("jobRank", jobRank)
+
+                            return true
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    return false
+end
+
 function TRP.AddJobCategory(jobCategory, desc)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
