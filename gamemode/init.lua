@@ -37,11 +37,19 @@ function TRP.CheckDir()
     return true
 end
 
-function GM:ShowSpare1( ply )
+function GM:ShowSpare1(ply)
 	net.Start( "TRP_EnableMouse" )
 	net.Send( ply )
 end
 
-function GM:GravGunPunt( ply, ent )
+function GM:GravGunPunt(ply, ent)
 	return false
+end
+
+function GM:PlayerDeath(victim, inflictor, attacker) 
+	victim:SetNWBool("TRP_tased", false)
+end
+
+function GM:PlayerInitialSpawn(ply)
+	ply:SetNWBool("TRP_tased", false)
 end
