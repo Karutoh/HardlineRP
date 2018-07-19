@@ -1,0 +1,1 @@
+resource.AddFile("sound/taser.wav")
