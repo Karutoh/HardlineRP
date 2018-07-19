@@ -157,65 +157,74 @@ function setupDisplay(PANEL, tabIndex)
 			end
 		else
 			for i = 1, #jobstbl do
+				for j = 1, #jobstbl[i].jobTitles do
+					for r = 1, #jobstbl[i].jobTitles[j].jobRanks do
+						local jobPanel = vgui.Create("DButton", PANEL.displayPanel)
+						jobPanel:SetText("")
+						jobPanel:SetSize(PANEL.displayPanel:GetWide(), 150)
+						jobPanel:SetPos(0, (i - 1) * jobPanel:GetTall())
 
-				local jobPanel = vgui.Create("DButton", PANEL.displayPanel)
-				jobPanel:SetText("")
-				jobPanel:SetSize(PANEL.displayPanel:GetWide(), 150)
-				jobPanel:SetPos(0, (i - 1) * jobPanel:GetTall())
+						local jobDescription = vgui.Create("DButton", jobPanel)
+						jobDescription:SetText("")
+						jobDescription:SetSize(jobPanel:GetWide() / 2, jobPanel:GetTall() / 2)
+						jobDescription:SetPos((jobPanel:GetWide() / 2) - (jobDescription:GetWide() / 2), jobPanel:GetTall() - jobDescription:GetTall())
 
-				local jobDescription = vgui.Create("DButton", jobPanel)
-				jobDescription:SetText("")
-				jobDescription:SetSize(jobPanel:GetWide() / 2, jobPanel:GetTall() / 2)
-				jobDescription:SetPos((jobPanel:GetWide() / 2) - (jobDescription:GetWide() / 2), jobPanel:GetTall() - jobDescription:GetTall())
+						local jdLabel = vgui.Create("DLabel", jobDescription)
+						jdLabel:SetAutoStretchVertical(true);
+						jdLabel:SetWide(jobDescription:GetWide());
+						jdLabel:SetWrap(true);
+						jdLabel:SetMouseInputEnabled(true)
+						jdLabel:SetCursor("hand")
 
-				local jdLabel = vgui.Create("DLabel", jobDescription)
-				jdLabel:SetAutoStretchVertical(true);
-				jdLabel:SetWide(jobDescription:GetWide());
-				jdLabel:SetWrap(true);
-				jdLabel:SetMouseInputEnabled(true)
-				jdLabel:SetCursor("hand")
+						jobPanel.Paint = function()
+							if !isVisible || tabs[tabIndex]['name'] != "Jobs" then return false end
 
-				jobPanel.Paint = function()
-					if !isVisible || tabs[tabIndex]['name'] != "Jobs" then return false end
+							if jobPanel:IsHovered() || jobDescription:IsHovered() || jdLabel:IsHovered() then
+								draw.RoundedBox(0, 0, 0, jobPanel:GetWide(), jobPanel:GetTall(), Color(255, 255, 255, 255))
+								draw.RoundedBox(0, 2, 2, jobPanel:GetWide()-4, jobPanel:GetTall()-4, Color(80, 80, 80, 255))
+							else
+								draw.RoundedBox(0, 0, 0, jobPanel:GetWide(), jobPanel:GetTall(), Color(0, 0, 0, 255))
+								draw.RoundedBox(0, 2, 2, jobPanel:GetWide()-4, jobPanel:GetTall()-4, Color(80, 80, 80, 255))
+							end
 
-					if jobPanel:IsHovered() || jobDescription:IsHovered() || jdLabel:IsHovered() then
-						draw.RoundedBox(0, 0, 0, jobPanel:GetWide(), jobPanel:GetTall(), Color(255, 255, 255, 255))
-						draw.RoundedBox(0, 2, 2, jobPanel:GetWide()-4, jobPanel:GetTall()-4, Color(80, 80, 80, 255))
-					else
-						draw.RoundedBox(0, 0, 0, jobPanel:GetWide(), jobPanel:GetTall(), Color(0, 0, 0, 255))
-						draw.RoundedBox(0, 2, 2, jobPanel:GetWide()-4, jobPanel:GetTall()-4, Color(80, 80, 80, 255))
+							surface.SetFont("buttonFont")
+							surface.SetTextColor(0, 0, 0, 255)
+							local tWidth, tHeight = surface.GetTextSize(jobstbl[i].jobTitles[j].title)
+							surface.SetTextPos((jobPanel:GetWide() / 2) - (tWidth / 2), 5)
+							surface.DrawText(jobstbl[i].jobTitles[j].title)
+							surface.SetTextColor(0, 0, 0, 255)
+							local tWidth, tHeight = surface.GetTextSize(jobstbl[i].jobTitles[j].jobRanks[r].title)
+							surface.SetTextPos((jobPanel:GetWide() / 2) - (tWidth / 2), tHeight+5)
+							surface.DrawText(jobstbl[i].jobTitles[j].jobRanks[r].title)
+						end
+
+						jobPanel.DoClick = function()
+							jobPanelClick(jobstbl[i].title,jobstbl[i].jobTitles[j].title, jobstbl[i].jobTitles[j].jobRanks[r].title)
+						end
+
+						jobDescription.Paint = function()
+							if !isVisible then return false end
+						end
+
+						jobDescription.DoClick = function()
+							jobPanelClick(jobstbl[i].title,jobstbl[i].jobTitles[j].title, jobstbl[i].jobTitles[j].jobRanks[r].title)
+						end
+
+						jdLabel.Paint = function()
+							if !isVisible then 
+								jdLabel:SetText("")
+								return false 
+							end
+							jdLabel:SetFont("Default")
+							jdLabel:SetText(jobstbl[i].jobTitles[1].description)
+						end
+
+						jdLabel.DoClick = function()
+							jobPanelClick(jobstbl[i].title,jobstbl[i].jobTitles[j].title, jobstbl[i].jobTitles[j].jobRanks[r].title)
+						end
+
 					end
 
-					surface.SetFont("buttonFont")
-					surface.SetTextColor(0, 0, 0, 255)
-					local tWidth, tHeight = surface.GetTextSize(jobstbl[i].jobTitles[1].title)
-					surface.SetTextPos((jobPanel:GetWide() / 2) - (tWidth / 2), 5)
-					surface.DrawText(jobstbl[i].jobTitles[1].title)
-				end
-
-				jobPanel.DoClick = function()
-					jobPanelClick()
-				end
-
-				jobDescription.Paint = function()
-					if !isVisible then return false end
-				end
-
-				jobDescription.DoClick = function()
-					jobPanelClick()
-				end
-
-				jdLabel.Paint = function()
-					if !isVisible then 
-						jdLabel:SetText("")
-						return false 
-					end
-					jdLabel:SetFont("Default")
-					jdLabel:SetText(jobstbl[i].jobTitles[1].description)
-				end
-
-				jdLabel.DoClick = function()
-					jobPanelClick()
 				end
 
 			end
@@ -226,8 +235,12 @@ function setupDisplay(PANEL, tabIndex)
 	end
 end
 
-function jobPanelClick()
-	print("CLICKED")
+function jobPanelClick(category, title, rank)
+	net.Start("TRP_F4MenuSetJob")
+		net.WriteString(category)
+		net.WriteString(title)
+		net.WriteString(rank)
+	net.SendToServer()
 end
 
 function showMenu()
