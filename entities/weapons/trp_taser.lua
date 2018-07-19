@@ -27,6 +27,7 @@ SWEP.Base = "weapon_base"
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = true
 SWEP.Spawnable = true
+SWEP.AdminOnly = true
 
 SWEP.TaserSound = Sound("taser.wav")
 SWEP.DropWeapon = true
