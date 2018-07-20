@@ -49,8 +49,45 @@ end
 
 function GM:PlayerDeath(victim, inflictor, attacker) 
 	victim:SetNWBool("TRP_tased", false)
+	victim:SetNWBool("TRP_handcuffed", false)
+	victim:SetNWString("TRP_PlayerCuffedWeapons", "")
 end
 
 function GM:PlayerInitialSpawn(ply)
 	ply:SetNWBool("TRP_tased", false)
+	ply:SetNWBool("TRP_handcuffed", false)
+	ply:SetNWString("TRP_PlayerCuffedWeapons", "")
+
+end
+
+function GM:AllowPlayerPickup(ply, ent)
+	if ply:GetNWBool("TRP_handcuffed") == true then
+		ply:PrintMessage(HUD_PRINTTALK, "You are currently handcuffed!")
+		return false 
+	end
+	return true
+end
+
+function GM:PlayerCanPickupItem( ply, item )
+	if ply:GetNWBool("TRP_handcuffed") == true then
+		ply:PrintMessage(HUD_PRINTTALK, "You are currently handcuffed!")
+		return false 
+	end
+	return true
+end
+
+function GM:PlayerCanPickupWeapon( ply, wep )
+	if ply:GetNWBool("TRP_handcuffed") == true then
+		ply:PrintMessage(HUD_PRINTTALK, "You are currently handcuffed!")
+		return false 
+	end
+	return true
+end
+
+function GM:PlayerSpawnProp( ply, model )
+	if ply:GetNWBool("TRP_handcuffed") == true then
+		ply:PrintMessage(HUD_PRINTTALK, "You are currently handcuffed!")
+		return false 
+	end
+	return true
 end
