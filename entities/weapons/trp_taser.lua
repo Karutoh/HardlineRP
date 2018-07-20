@@ -35,14 +35,12 @@ SWEP.Duration = 15
 SWEP.Distance = 256
 
 function SWEP:PrimaryAttack()
-
-	if self.Owner:GetEyeTrace().Entity:IsWorld() then return false end
+	
+	local trace = self.Owner:GetEyeTrace()
+	if self.Owner:GetEyeTrace().Entity:IsWorld() || trace.StartPos:Distance(trace.HitPos) > self.Distance then return false end
 
 	if CLIENT then
-		local trace = self.Owner:GetEyeTrace()
 		if(IsFirstTimePredicted())then
-			if trace.StartPos:Distance(trace.HitPos) > self.Distance then return end		
-
 			local data = EffectData()
 			data:SetOrigin(trace.HitPos)
 			data:SetNormal(trace.HitNormal)
