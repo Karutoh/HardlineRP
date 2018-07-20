@@ -23,6 +23,7 @@ include("entity_ownership/shared.lua")
 include("new_life_name/server.lua")
 include("f4menu/server.lua")
 include("money/server.lua")
+include("skills/server.lua")
 
 function TRP.CheckDir()
     if !file.Exists("trp", "DATA") then
