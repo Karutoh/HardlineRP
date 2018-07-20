@@ -37,7 +37,7 @@ SWEP.Distance = 256
 function SWEP:PrimaryAttack()
 	local trace = self.Owner:GetEyeTrace()
 	local ent = trace.Entity
-	if ent:IsWorld() || !ent:IsPlayer() || !ent:IsNPC() || trace.StartPos:Distance(trace.HitPos) > self.Distance then return false end
+	if ent:IsWorld() || (!ent:IsPlayer() && !ent:IsNPC()) || trace.StartPos:Distance(trace.HitPos) > self.Distance then return false end
 
 	if CLIENT then
 		if(IsFirstTimePredicted())then
