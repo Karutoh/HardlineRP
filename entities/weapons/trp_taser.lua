@@ -35,9 +35,9 @@ SWEP.Duration = 15
 SWEP.Distance = 256
 
 function SWEP:PrimaryAttack()
-	
 	local trace = self.Owner:GetEyeTrace()
-	if trace.Entity:IsWorld() || trace.StartPos:Distance(trace.HitPos) > self.Distance then return false end
+	local ent = trace.Entity
+	if ent:IsWorld() || !ent:IsPlayer() || !ent:IsNPC() || trace.StartPos:Distance(trace.HitPos) > self.Distance then return false end
 
 	if CLIENT then
 		if(IsFirstTimePredicted())then
@@ -59,9 +59,6 @@ function SWEP:PrimaryAttack()
 
     self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
     self.Owner:SetAnimation(PLAYER_ATTACK1)
-
-    local trace = self.Owner:GetEyeTrace()
-    local ent = trace.Entity
 
     if ent:IsWorld() then return end
 
@@ -97,7 +94,7 @@ function SWEP:PrimaryAttack()
 
 	if ent:IsNPC() then return end
 
-    if ent:IsPlayer() || ent:IsBot() then
+    if ent:IsPlayer() then
         if ent:GetNWBool("TRP_tased") then return end
         if dist > self.Distance then return end
         local weapon = ent:GetActiveWeapon()
