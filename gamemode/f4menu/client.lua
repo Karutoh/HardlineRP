@@ -1,15 +1,6 @@
-local menuActive = false
+local f4Menu = nil
 local currentTab = 1
 local tabs = {}
-
-local function ShowTab(panel, index)
-	local children = panel:GetChildren()
-	for i = 1, #children do
-		children[i]:Remove()
-	end
-
-	tabs[index].cb(panel)
-end
 
 function TRP.AddF4MenuTab(title, cb)
 	for i = 1, #tabs do
@@ -23,16 +14,31 @@ function TRP.AddF4MenuTab(title, cb)
 	return true
 end
 
+local function ShowTab(panel, index)
+	local children = panel:GetChildren()
+	for i = 1, #children do
+		children[i]:Remove()
+	end
+
+	tabs[index].cb(panel)
+end
+
 net.Receive("TRP_OpenF4Menu", function (len, ply)
-	if menuActive then
+	if gui.IsGameUIVisible() then
 		return
 	end
 
-	menuActive = true
+	if f4Menu then
+		gui.EnableScreenClicker(false)
+		f4Menu:Remove()
+		f4Menu = nil
+		return
+	end
 
 	gui.EnableScreenClicker(true)
 	
-	local f4Menu = vgui.Create("DFrame")
+	f4Menu = vgui.Create("DFrame")
+	f4Menu:SetSizable(true)
 	f4Menu:SetSize(ScrW() / 1.25, ScrH() / 1.25)
 	f4Menu:Center()
 	f4Menu:SetTitle("Primary Menu")
@@ -41,19 +47,35 @@ net.Receive("TRP_OpenF4Menu", function (len, ply)
 
 	function f4Menu:OnClose()
 		gui.EnableScreenClicker(false)
-		menuActive = false
+		f4Menu = nil
+	end
+
+	local tabPanel = vgui.Create("DPanel", f4Menu)
+	function tabPanel:PerformLayout(w, h)
+		local c = tabPanel:GetChildren()
+
+		for i = 1, #c do
+			c[i]:SetSize(tabPanel:GetWide() - 10, c[i]:GetTall())
+		end
 	end
 
 	local panel = vgui.Create("DPanel", f4Menu)
-	panel:SetSize(f4Menu:GetWide() * 0.75 - 5, f4Menu:GetTall() - 35)
-	panel:SetPos(f4Menu:GetWide() / 4, 30)
+
+	local div = vgui.Create("DHorizontalDivider", f4Menu)
+	div:Dock(FILL)
+	div:SetLeft(tabPanel)
+	div:SetRight(panel)
+	div:SetDividerWidth(5)
+	div:SetLeftWidth(f4Menu:GetWide() / 4)
+	div:SetLeftMin(f4Menu:GetWide() / 4)
+	div:SetRightMin(f4Menu:GetWide() / 2)
 
 	local pad = 5
 
 	for i = 1, #tabs do
-		local tab = vgui.Create("DButton", f4Menu)
+		local tab = vgui.Create("DButton", tabPanel)
 		tab:SetSize(f4Menu:GetWide() / 4 - pad * 2, 30)
-		tab:SetPos(5, (30 + pad) * (i - 1) + pad + 25)
+		tab:SetPos(5, (30 + pad) * (i - 1) + pad)
 		tab:SetText(tabs[i].title)
 
 		tab.DoClick = function ()
@@ -64,6 +86,8 @@ net.Receive("TRP_OpenF4Menu", function (len, ply)
 			ShowTab(panel, i)
 		end
 	end
+
+	PrintTable(f4Menu:GetChildren())
 end)
 
 TRP.AddF4MenuTab("Jobs", function (panel)
