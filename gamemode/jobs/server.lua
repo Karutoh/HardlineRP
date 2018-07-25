@@ -1,24 +1,24 @@
 local jobs = {}
 
-hook.Add("TRP_InitPlayerData", "TRP_InitJobInfo", function (ply)
+hook.Add("HRP_InitPlayerData", "HRP_InitJobInfo", function (ply)
     ply:SetNWString("jobCategory", "")
     ply:SetNWString("jobTitle", "")
     ply:SetNWString("jobRank", "")
 end)
 
-function TRP.FindRank(rank, rankTable)
+function HRP.FindRank(rank, rankTable)
     if rankTable.title == rank then
         return rankTable
     end
 
     for r = 1, #rankTable.promotions do
-        return TRP.FindRank(rank, rankTable.promotions[r])
+        return HRP.FindRank(rank, rankTable.promotions[r])
     end
 
     return nil
 end
 
-function TRP.JobRank(rankTitle)
+function HRP.JobRank(rankTitle)
     return {
         title = rankTitle,
         description = "",
@@ -29,7 +29,7 @@ function TRP.JobRank(rankTitle)
     }
 end
 
-function TRP.SetPlayerJob(ply, jobCategory, jobTitle, jobRank)
+function HRP.SetPlayerJob(ply, jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             for t = 1, #jobs[c].jobTitles do
@@ -51,7 +51,7 @@ function TRP.SetPlayerJob(ply, jobCategory, jobTitle, jobRank)
     return false
 end
 
-function TRP.AddJobCategory(jobCategory, desc)
+function HRP.AddJobCategory(jobCategory, desc)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             return false
@@ -62,7 +62,7 @@ function TRP.AddJobCategory(jobCategory, desc)
     return true
 end
 
-function TRP.AddJobTitle(jobCategory, jobTitle, abbr, desc)
+function HRP.AddJobTitle(jobCategory, jobTitle, abbr, desc)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             for t = 1, #jobs[c].jobTitles do
@@ -79,7 +79,7 @@ function TRP.AddJobTitle(jobCategory, jobTitle, abbr, desc)
     return false
 end
 
-function TRP.AddJobRank(jobCategory, jobTitle, jobRank)
+function HRP.AddJobRank(jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             for t = 1, #jobs[c].jobTitles do
@@ -101,7 +101,7 @@ function TRP.AddJobRank(jobCategory, jobTitle, jobRank)
     return false
 end
 
-function TRP.GetJobCategories()
+function HRP.GetJobCategories()
     local categories = {}
 
     for c = 1, #jobs do
@@ -111,7 +111,7 @@ function TRP.GetJobCategories()
     return categories
 end
 
-function TRP.GetJobTitles(jobCategory)
+function HRP.GetJobTitles(jobCategory)
     local titles = {}
 
     for c = 1, #jobs do
@@ -123,13 +123,13 @@ function TRP.GetJobTitles(jobCategory)
     return titles
 end
 
-function TRP.GetJobRank(jobCategory, jobTitle, jobRank)
+function HRP.GetJobRank(jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             for t = 1, #jobs[c].jobTitles do
                 if jobs[c].jobTitles[t].title == title then
                     for r = 1, #jobs[c].jobTitles[t].jobRanks do
-                        return TRP.FindRank(rank, jobs[c].jobTitles[t].jobRanks[r])
+                        return HRP.FindRank(rank, jobs[c].jobTitles[t].jobRanks[r])
                     end
                 end
             end
@@ -139,6 +139,6 @@ function TRP.GetJobRank(jobCategory, jobTitle, jobRank)
     return nil
 end
 
-function TRP.GetJobsTable()
+function HRP.GetJobsTable()
     return jobs
 end

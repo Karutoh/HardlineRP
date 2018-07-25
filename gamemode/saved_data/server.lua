@@ -1,6 +1,6 @@
 local function CheckPlyDir(ply)
-    local b = TRP.CheckDir()
-    local d = "trp/player_data/" .. ply:SteamID64()
+    local b = HRP.CheckDir()
+    local d = "HRP/player_data/" .. ply:SteamID64()
 
     if !file.Exists(d, "DATA") then
         file.CreateDir(d)
@@ -11,11 +11,11 @@ local function CheckPlyDir(ply)
 end
 
 local function DeleteSave(ply)
-    file.Write("trp/player_data/" .. ply:SteamID64() .. "/player_data.txt", "")
+    file.Write("HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt", "")
 end
 
 local function Save(ply)
-    local fName = "trp/player_data/" .. ply:SteamID64() .. "/player_data.txt"
+    local fName = "HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt"
 
     CheckPlyDir(ply)
 
@@ -37,7 +37,7 @@ local function Save(ply)
     f:WriteULong(string.len(adminR))
     f:Write(adminR)
 
-    hook.Call("TRP_SavePlayerData", nil, f, ply)
+    hook.Call("HRP_SavePlayerData", nil, f, ply)
 
     f:Flush()
     f:Close()
@@ -50,7 +50,7 @@ local function Load(ply)
         return false
     end
 
-    local f = file.Open("trp/player_data/" .. ply:SteamID64() .. "/player_data.txt", "rb", "DATA")
+    local f = file.Open("HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt", "rb", "DATA")
 
     if !f then
         return false
@@ -62,38 +62,38 @@ local function Load(ply)
         return false
     end
 
-    if !TRP.SetPlayerAdminRank(ply, f:Read(f:ReadULong()) or "") then
+    if !HRP.SetPlayerAdminRank(ply, f:Read(f:ReadULong()) or "") then
         ply:ChatPrint("Server - Loaded admin rank, but it does not exist.")
     end
 
-    hook.Call("TRP_LoadPlayerData", nil, f, ply)
+    hook.Call("HRP_LoadPlayerData", nil, f, ply)
 
     f:Close()
 
     return true
 end
 
-hook.Add("PlayerInitialSpawn", "TRP_SavePlayerData", function (ply)
-    hook.Call("TRP_InitPlayerData", nil, ply)
+hook.Add("PlayerInitialSpawn", "HRP_SavePlayerData", function (ply)
+    hook.Call("HRP_InitPlayerData", nil, ply)
 
     if Load(ply) then
-        net.Start("TRP_Loaded")
+        net.Start("HRP_Loaded")
         net.WriteString(ply:GetNWString("rpName"))
         net.Send(ply)
     else
-        net.Start("TRP_New")
+        net.Start("HRP_New")
         net.Send(ply)
     end
 end)
 
-hook.Add("PlayerDeath", "TRP_NewLife", function (v, i, a)
+hook.Add("PlayerDeath", "HRP_NewLife", function (v, i, a)
     DeleteSave(v)
 
-    net.Start("TRP_New")
+    net.Start("HRP_New")
     net.Send(v)
 end)
 
-net.Receive("TRP_RpName", function ()
+net.Receive("HRP_RpName", function ()
     local ply = player.GetBySteamID64(net.ReadString())
     if !ply then
         return

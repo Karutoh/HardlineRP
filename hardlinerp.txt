@@ -1,7 +1,7 @@
-"testrp"
+"hardlinerp"
 {
 	"base"		"sandbox"
-	"title"		"Test RP"
+	"title"		"Hardline RP"
 	"maps"		"^rp_"
 	"menusystem"	"1"
 }

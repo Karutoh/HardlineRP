@@ -1,4 +1,4 @@
-AddCSLuaFile("cl_init.lua")
+sAddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("fonts.lua")
 AddCSLuaFile("hud.lua")
@@ -10,7 +10,7 @@ AddCSLuaFile("entity_ownership/shared.lua")
 include("shared.lua")
 include("resources.lua")
 
-TRP.defaultJobs = true
+HRP.defaultJobs = true
 
 include("network_strings.lua")
 include("jobs/server.lua")
@@ -25,13 +25,13 @@ include("f4menu/server.lua")
 include("money/server.lua")
 include("skills/server.lua")
 
-function TRP.CheckDir()
-    if !file.Exists("trp", "DATA") then
-        file.CreateDir("trp")
-        file.CreateDir("trp/player_data")
+function HRP.CheckDir()
+    if !file.Exists("HRP", "DATA") then
+        file.CreateDir("HRP")
+        file.CreateDir("HRP/player_data")
         return false
-    elseif !file.Exists("trp/player_data", "DATA") then
-        file.CreateDir("trp/player_data")
+    elseif !file.Exists("HRP/player_data", "DATA") then
+        file.CreateDir("HRP/player_data")
         return false
     end
 
@@ -39,7 +39,7 @@ function TRP.CheckDir()
 end
 
 function GM:ShowSpare1(ply)
-	net.Start( "TRP_EnableMouse" )
+	net.Start( "HRP_EnableMouse" )
 	net.Send( ply )
 end
 
@@ -48,20 +48,20 @@ function GM:GravGunPunt(ply, ent)
 end
 
 function GM:PlayerDeath(victim, inflictor, attacker) 
-	victim:SetNWBool("TRP_tased", false)
-	victim:SetNWBool("TRP_handcuffed", false)
-	victim:SetNWString("TRP_PlayerCuffedWeapons", "")
+	victim:SetNWBool("HRP_tased", false)
+	victim:SetNWBool("HRP_handcuffed", false)
+	victim:SetNWString("HRP_PlayerCuffedWeapons", "")
 end
 
 function GM:PlayerInitialSpawn(ply)
-	ply:SetNWBool("TRP_tased", false)
-	ply:SetNWBool("TRP_handcuffed", false)
-	ply:SetNWString("TRP_PlayerCuffedWeapons", "")
+	ply:SetNWBool("HRP_tased", false)
+	ply:SetNWBool("HRP_handcuffed", false)
+	ply:SetNWString("HRP_PlayerCuffedWeapons", "")
 
 end
 
 function GM:AllowPlayerPickup(ply, ent)
-	if ply:GetNWBool("TRP_handcuffed") == true then
+	if ply:GetNWBool("HRP_handcuffed") == true then
 		ply:PrintMessage(HUD_PRINTTALK, "You are currently handcuffed!")
 		return false 
 	end
@@ -69,7 +69,7 @@ function GM:AllowPlayerPickup(ply, ent)
 end
 
 function GM:PlayerCanPickupItem( ply, item )
-	if ply:GetNWBool("TRP_handcuffed") == true then
+	if ply:GetNWBool("HRP_handcuffed") == true then
 		ply:PrintMessage(HUD_PRINTTALK, "You are currently handcuffed!")
 		return false 
 	end
@@ -77,7 +77,7 @@ function GM:PlayerCanPickupItem( ply, item )
 end
 
 function GM:PlayerCanPickupWeapon( ply, wep )
-	if ply:GetNWBool("TRP_handcuffed") == true then
+	if ply:GetNWBool("HRP_handcuffed") == true then
 		ply:PrintMessage(HUD_PRINTTALK, "You are currently handcuffed!")
 		return false 
 	end
@@ -85,7 +85,7 @@ function GM:PlayerCanPickupWeapon( ply, wep )
 end
 
 function GM:PlayerSpawnProp( ply, model )
-	if ply:GetNWBool("TRP_handcuffed") == true then
+	if ply:GetNWBool("HRP_handcuffed") == true then
 		ply:PrintMessage(HUD_PRINTTALK, "You are currently handcuffed!")
 		return false 
 	end

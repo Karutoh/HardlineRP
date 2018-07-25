@@ -1,14 +1,14 @@
-if !TRP.defaultJobs then return false end
+if !HRP.defaultJobs then return false end
 
-TRP.AddJobCategory("Police Department",
+HRP.AddJobCategory("Police Department",
     "The police department is responsible for taking care of crime and providing justice to society."
 )
 
-TRP.AddJobTitle("Police Department", "Police Officer", "PO",
+HRP.AddJobTitle("Police Department", "Police Officer", "PO",
     "The police officer is responsible for enforcing the law onto it's citizens."
 )
 
-local trooper = TRP.JobRank("Trooper")
+local trooper = HRP.JobRank("Trooper")
 trooper.description = "Still a recruit but less limited."
 trooper.dailySalary = 300
 trooper.loadout = {
@@ -18,7 +18,7 @@ trooper.loadout = {
     "tazer"
 }
 
-local cadet = TRP.JobRank("Cadet")
+local cadet = HRP.JobRank("Cadet")
 cadet.description = "A recruit."
 cadet.dailySalary = 250
 cadet.loadout = {
@@ -29,4 +29,4 @@ cadet.promotions = {
     trooper
 }
 
-TRP.AddJobRank("Police Department", "Police Officer", cadet)
+HRP.AddJobRank("Police Department", "Police Officer", cadet)

@@ -44,7 +44,7 @@ local function OpenNewLifeName()
                 else
                     frame:Close()
 
-                    net.Start("TRP_RpName")
+                    net.Start("HRP_RpName")
                     net.WriteString(LocalPlayer():SteamID64())
                     net.WriteString(name:GetText())
                     net.SendToServer()
@@ -62,9 +62,9 @@ local function OpenNewLifeName()
     end
 end
 
-net.Receive("TRP_New", OpenNewLifeName)
+net.Receive("HRP_New", OpenNewLifeName)
 
-hook.Add("PostPlayerDraw", "TRP_RpNameplate", function (ply)
+hook.Add("PostPlayerDraw", "HRP_RpNameplate", function (ply)
     if !IsValid(ply) then
         return
     end

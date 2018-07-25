@@ -11,7 +11,7 @@ local function DrawInfo()
     surface.DrawText("RP Name: " .. LocalPlayer():GetNWString("rpName"))
 end
 
-hook.Add("HUDPaint", "TRP_DrawHUD", function ()
+hook.Add("HUDPaint", "HRP_DrawHUD", function ()
     DrawInfo()
 end)
 
@@ -24,7 +24,7 @@ local hide = {
     ["CHudSecondaryAmmo"] = true
 }
 
-hook.Add("HUDShouldDraw", "TRP_HideHUD", function (name)
+hook.Add("HUDShouldDraw", "HRP_HideHUD", function (name)
     if hide[name] then
         return false
     end

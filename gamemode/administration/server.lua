@@ -1,25 +1,25 @@
-hook.Add("TRP_SavePlayerData", "TRP_CacheAdminRank", function (f, ply)
+hook.Add("HRP_SavePlayerData", "HRP_CacheAdminRank", function (f, ply)
     local adminRank = ply:GetNWString("adminRank")
     f:WriteULong(string.len(adminRank))
     f:Write(adminRank)
 end)
 
-hook.Add("TRP_LoadPlayerData", "TRP_CacheAdminRank", function (f, ply)
+hook.Add("HRP_LoadPlayerData", "HRP_CacheAdminRank", function (f, ply)
     ply:SetNWString("adminRank", f:Read(f:ReadULong()))
 end)
 
-hook.Add("TRP_InitPlayerData", "TRP_InitAdminRank", function (ply)
+hook.Add("HRP_InitPlayerData", "HRP_InitAdminRank", function (ply)
     ply:SetNWString("adminRank", "")
 end)
 
 local ranks = {}
 
 local function Load()
-    if !TRP.CheckDir() then
+    if !HRP.CheckDir() then
         return false
     end
 
-    local f = file.Open("trp/admin_ranks.txt", "rb", "DATA")
+    local f = file.Open("HRP/admin_ranks.txt", "rb", "DATA")
 
     if !f then
         return false
@@ -33,7 +33,7 @@ local function Load()
 
     local size = f:ReadULong()
     for i = 1, size do
-        local rank = TRP.AdminRank(f:Read(f:ReadULong()))
+        local rank = HRP.AdminRank(f:Read(f:ReadULong()))
         rank.color = {
             f:ReadByte(),
             f:ReadByte(),
@@ -53,9 +53,9 @@ local function Load()
 end
 
 local function Save()
-    local fName = "trp/admin_ranks.txt"
+    local fName = "HRP/admin_ranks.txt"
 
-    TRP.CheckDir()
+    HRP.CheckDir()
 
     local f = file.Open(fName, "wb", "DATA")
 
@@ -92,7 +92,7 @@ local function Save()
     return true
 end
 
-function TRP.AdminRank(title)
+function HRP.AdminRank(title)
     return {
         title = title,
         color = Color(255, 255, 255, 255),
@@ -100,7 +100,7 @@ function TRP.AdminRank(title)
     }
 end
 
-function TRP.SetPlayerAdminRank(ply, adminRank)
+function HRP.SetPlayerAdminRank(ply, adminRank)
     if string.len(adminRank) == 0 then
         ply:SetNWString("adminRank", "")
         return true
@@ -116,7 +116,7 @@ function TRP.SetPlayerAdminRank(ply, adminRank)
     return false
 end
 
-function TRP.AddAdminRank(adminRank)
+function HRP.AddAdminRank(adminRank)
     for r = 1, #ranks do
         if ranks[r].title == adminRank.title then
             return false
@@ -130,10 +130,10 @@ function TRP.AddAdminRank(adminRank)
     return true
 end
 
-function TRP.GetAdminRanks()
+function HRP.GetAdminRanks()
     return ranks
 end
 
-hook.Add("Initialize", "TRP_LoadAdminRanks", function ()
+hook.Add("Initialize", "HRP_LoadAdminRanks", function ()
     Load()
 end)

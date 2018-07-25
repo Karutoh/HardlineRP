@@ -1,13 +1,13 @@
-hook.Add("TRP_SavePlayerData", "TRP_CacheRpName", function (f, ply)
+hook.Add("HRP_SavePlayerData", "HRP_CacheRpName", function (f, ply)
     local rpName = ply:GetNWString("rpName")
     f:WriteULong(string.len(rpName))
     f:Write(rpName)
 end)
 
-hook.Add("TRP_LoadPlayerData", "TRP_CacheRpName", function (f, ply)
+hook.Add("HRP_LoadPlayerData", "HRP_CacheRpName", function (f, ply)
     ply:SetNWString("rpName", f:Read(f:ReadULong()))
 end)
 
-hook.Add("TRP_InitPlayerData", "TRP_InitRpName", function (ply)
+hook.Add("HRP_InitPlayerData", "HRP_IniHRPName", function (ply)
     ply:SetNWString("rpName", "")
 end)

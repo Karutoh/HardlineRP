@@ -2,7 +2,7 @@ local f4Menu = nil
 local currentTab = 1
 local tabs = {}
 
-function TRP.AddF4MenuTab(title, cb)
+function HRP.AddF4MenuTab(title, cb)
 	for i = 1, #tabs do
 		if tabs[i].title == title then
 			return false
@@ -23,7 +23,7 @@ local function ShowTab(panel, index)
 	tabs[index].cb(panel)
 end
 
-net.Receive("TRP_OpenF4Menu", function (len, ply)
+net.Receive("HRP_OpenF4Menu", function (len, ply)
 	if gui.IsGameUIVisible() then
 		return
 	end
@@ -90,20 +90,20 @@ net.Receive("TRP_OpenF4Menu", function (len, ply)
 	PrintTable(f4Menu:GetChildren())
 end)
 
-TRP.AddF4MenuTab("Jobs", function (panel)
+HRP.AddF4MenuTab("Jobs", function (panel)
 	local button = vgui.Create("DButton", panel)
 	button:SetText("Hello World")
 	button:SetSize(100, 30)
 end)
 
-TRP.AddF4MenuTab("Test #1", function (panel)
+HRP.AddF4MenuTab("Test #1", function (panel)
 	local button = vgui.Create("DButton", panel)
 	button:SetText("Fuck You")
 	button:SetSize(100, 30)
 	button:SetPos(100, 100)
 end)
 
-TRP.AddF4MenuTab("Test #2", function (panel)
+HRP.AddF4MenuTab("Test #2", function (panel)
 	local button = vgui.Create("DButton", panel)
 	button:SetText("You Bitch")
 	button:SetSize(100, 30)
