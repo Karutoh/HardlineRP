@@ -1,4 +1,4 @@
-sAddCSLuaFile("cl_init.lua")
+AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("fonts.lua")
 AddCSLuaFile("hud.lua")
