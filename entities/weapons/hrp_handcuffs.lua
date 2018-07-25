@@ -19,7 +19,7 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = "none"
 
-SWEP.Category = "TRP Sweps"
+SWEP.Category = "HRP Sweps"
 
 SWEP.PrintName = "Handcuffs"
 
@@ -44,16 +44,16 @@ function SWEP:PrimaryAttack()
 	local trace = self.Owner:GetEyeTrace()
 	local ent = trace.Entity
 
-	if ent:GetNWFloat("TRP_handcuffedDelay") != nil && ent:GetNWFloat("TRP_handcuffedDelay") > CurTime() then
+	if ent:GetNWFloat("HRP_handcuffedDelay") != nil && ent:GetNWFloat("HRP_handcuffedDelay") > CurTime() then
 		return false
 	end
 
 	if !ent:IsPlayer() || trace.StartPos:Distance(trace.HitPos) > self.Distance then return false end
 
-	if !ent:GetNWBool("TRP_handcuffed") then
+	if !ent:GetNWBool("HRP_handcuffed") then
 		if SERVER then 
-			ent:SetNWBool("TRP_handcuffed", true) 
-			ent:SetNWFloat("TRP_handcuffedDelay", CurTime() + self.Delay)
+			ent:SetNWBool("HRP_handcuffed", true) 
+			ent:SetNWFloat("HRP_handcuffedDelay", CurTime() + self.Delay)
 		end
 
 		if CLIENT then
@@ -62,14 +62,14 @@ function SWEP:PrimaryAttack()
 
 		if SERVER then 
 			tbl = ent:GetWeapons()
-			ent:SetNWString("TRP_PlayerCuffedWeapons", createString(tbl))
+			ent:SetNWString("HRP_PlayerCuffedWeapons", createString(tbl))
 			ent:StripWeapons() 
 			ent:PrintMessage(HUD_PRINTTALK, "You have been handcuffed!")
 		end
 	else
 		if SERVER then 
-			ent:SetNWBool("TRP_handcuffed", false)
-			ent:SetNWFloat("TRP_handcuffedDelay", CurTime() + self.Delay)
+			ent:SetNWBool("HRP_handcuffed", false)
+			ent:SetNWFloat("HRP_handcuffedDelay", CurTime() + self.Delay)
 		end
 
 		if CLIENT then
@@ -78,7 +78,7 @@ function SWEP:PrimaryAttack()
 
 		if SERVER then
 
-			tbl = string.Split(ent:GetNWString("TRP_PlayerCuffedWeapons"), ",")
+			tbl = string.Split(ent:GetNWString("HRP_PlayerCuffedWeapons"), ",")
 
 			for i = 1, #tbl do
 				ent:Give(tbl[i])

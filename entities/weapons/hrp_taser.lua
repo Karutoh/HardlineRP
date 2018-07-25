@@ -17,7 +17,7 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo	= "none"
 
-SWEP.Category = "TRP Sweps"
+SWEP.Category = "HRP Sweps"
 
 SWEP.PrintName = "Taser"
 
@@ -64,9 +64,9 @@ function SWEP:PrimaryAttack()
 
 	local dist = trace.StartPos:Distance(trace.HitPos)
 	if ent:IsNPC() then
-		if ent:GetNWBool("TRP_tased") then return end
+		if ent:GetNWBool("HRP_tased") then return end
 		if dist > self.Distance then return end
-		ent:SetNWBool("TRP_tased", true)
+		ent:SetNWBool("HRP_tased", true)
 		local weapon = ent:GetActiveWeapon()
 		ent:TakeDamage(0, self.Owner, self)
 		weapon:SetNextPrimaryFire(CurTime() + self.Duration)
@@ -88,18 +88,18 @@ function SWEP:PrimaryAttack()
 			ragdoll:Remove()
 			weapon:SetNextPrimaryFire(CurTime())
 			ent:SetNoDraw(false)
-			ent:SetNWBool("TRP_tased", false)
+			ent:SetNWBool("HRP_tased", false)
 		end)
 	end
 
 	if ent:IsNPC() then return end
 
     if ent:IsPlayer() then
-        if ent:GetNWBool("TRP_tased") then return end
+        if ent:GetNWBool("HRP_tased") then return end
         if dist > self.Distance then return end
         local weapon = ent:GetActiveWeapon()
         
-        ent:SetNWBool("TRP_tased", true)
+        ent:SetNWBool("HRP_tased", true)
        
         ent:ViewPunch( Angle(-10, 0, 0))
         ent:PrintMessage(HUD_PRINTTALK, "You have been tased, you will be disabled temporarily")
@@ -150,7 +150,7 @@ function SWEP:PrimaryAttack()
 				weapon:SetNextPrimaryFire(CurTime())
 			end
        
-            ent:SetNWBool("TRP_tased", false)
+            ent:SetNWBool("HRP_tased", false)
         end)
     end
 end
