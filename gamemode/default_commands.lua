@@ -3,8 +3,15 @@ cmds.Identifier = "/"
 
 function HRP.AddCommand(name, desc, func)
 	
+	for i = 1, #cmds do
+		if cmds[i].name == name then
+			return false
+		end
+	end
+
 	table.insert(cmds, {name = name, desc = desc, func = func})
 
+	return true
 end
 
 function GM:PlayerSay(sender, text, teamChat)
