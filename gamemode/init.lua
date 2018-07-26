@@ -25,6 +25,7 @@ include("new_life_name/server.lua")
 include("f4menu/server.lua")
 include("money/server.lua")
 include("skills/server.lua")
+include("default_commands.lua")
 
 function HRP.CheckDir()
     if !file.Exists("HRP", "DATA") then
