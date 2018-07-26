@@ -36,7 +36,7 @@ function GM:PlayerSay(sender, text, teamChat)
 		
 		if cmds[i].name == cmdName then
 			
-			cmds[i].func(sender, cmds[i].name, args)
+			cmds[i].func(sender, args)
 
 		end
 
@@ -45,7 +45,7 @@ function GM:PlayerSay(sender, text, teamChat)
 end
 
 
-HRP.AddCommand("dropweapon", "Allows you to drop your current weapon.", function(ply, cmdName, args) 
+HRP.AddCommand("dropweapon", "Allows you to drop your current weapon.", function(ply, args) 
 
 	ply:DropWeapon(ply:GetActiveWeapon())
 
