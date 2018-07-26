@@ -4,6 +4,7 @@ include("hud.lua")
 --include("jobs/client.lua")
 include("new_life_name/client.lua")
 include("f4menu/client.lua")
+include("f4menu/jobs.lua")
 include("entity_ownership/shared.lua")
 
 function CreateMsgBox(msg)

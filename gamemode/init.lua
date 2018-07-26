@@ -5,6 +5,7 @@ AddCSLuaFile("hud.lua")
 --AddCSLuaFile("jobs/client.lua")
 AddCSLuaFile("new_life_name/client.lua")
 AddCSLuaFile("f4menu/client.lua")
+AddCSLuaFile("f4menu/jobs.lua")
 AddCSLuaFile("entity_ownership/shared.lua")
 
 include("shared.lua")
