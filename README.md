@@ -4,7 +4,9 @@ A new role playing game mode with entirely new mechanics for Garry's Mod. For no
 
 # Warning
 
-Currently only works in Multi-Player. Single-Player will come later.
+Currently only works in Multi-Player and in the "Dev" branch of Garry's Mod. Single-Player will come later.
+### Dev Branch Functions Used
+- [Ent:GetWorldTransform()](https://wiki.garrysmod.com/page/Entity/GetWorldTransformMatrix)
 
 # Modding
 
