@@ -24,6 +24,7 @@ function HRP.JobRank(rankTitle)
         description = "",
         dailySalary = 0,
         loadout = {},
+        plyMdls = {},
         requiredExp = {},
         promotions = {}
     }
