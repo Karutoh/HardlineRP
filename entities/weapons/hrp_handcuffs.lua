@@ -4,6 +4,7 @@ SWEP.ViewModel = Model( "models/weapons/c_arms.mdl" )
 SWEP.WorldModel = ""
 SWEP.ViewModelFOV = 54
 SWEP.UseHands = true
+SWEP.isDroppable = false
 
 SWEP.Author = "Scott"
 SWEP.Contact = "N/A"

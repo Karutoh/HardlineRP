@@ -93,3 +93,11 @@ function GM:PlayerSpawnProp( ply, model )
 	end
 	return true
 end
+
+function HRP.NotifyPlayer(ply, str, duration, NotifyType)
+	net.Start("HRP_Notify")
+		net.WriteString(str)
+		net.WriteInt(duration, 32)
+		net.WriteString(NotifyType)
+	net.Send(ply)
+end

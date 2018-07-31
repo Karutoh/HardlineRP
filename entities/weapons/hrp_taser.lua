@@ -2,6 +2,7 @@ AddCSLuaFile()
 
 SWEP.ViewModel = Model("models/weapons/v_pistol.mdl")
 SWEP.WorldModel = Model("models/weapons/w_pistol.mdl")
+SWEP.isDroppable = false
 
 SWEP.Author = "Scott"
 SWEP.Contact = "N/A"

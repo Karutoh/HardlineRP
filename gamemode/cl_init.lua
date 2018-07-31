@@ -29,12 +29,30 @@ end
 
 local mouseActive = false
 
-net.Receive("HRP_EnableMouse", function( len, ply ) 
+net.Receive("HRP_EnableMouse", function(len, ply) 
 	if(!mouseActive) then
 		gui.EnableScreenClicker( true )
 		mouseActive = true
 	else
 		gui.EnableScreenClicker( false )
 		mouseActive = false
+	end
+end)
+
+net.Receive("HRP_Notify", function()
+	local str = net.ReadString()
+	local duration = net.ReadInt(32)
+	local NotifyType = string.lower(net.ReadString())
+
+	if NotifyType == "error" then
+		notification.AddLegacy(str, NOTIFY_ERROR, duration)
+	elseif NotifyType == "undo" then
+		notification.AddLegacy(str, NOTIFY_UNDO, duration)
+	elseif NotifyType == "hint" then
+		notification.AddLegacy(str, NOTIFY_HINT, duration)
+	elseif NotifyType == "cleanup" then
+		notification.AddLegacy(str, NOTIFY_CLEANUP, duration)
+	else
+		notification.AddLegacy(str, NOTIFY_GENERIC, duration)
 	end
 end)
