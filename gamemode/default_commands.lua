@@ -100,12 +100,12 @@ HRP.AddCommand("dropmoney", "Allows you to drop a certain amount of money.", fun
 	money:SetModel("models/props/cs_assault/money.mdl")
 
 	local trace = {}
-    trace.start = ply:EyePos()
-    trace.endpos = trace.start + ply:GetAimVector() * 85
-    trace.filter = ply
+	trace.start = ply:EyePos()
+	trace.endpos = trace.start + ply:GetAimVector() * 85
+	trace.filter = ply
 
-    local tr = util.TraceLine(trace)
-
+	local tr = util.TraceLine(trace)
+	
 	money:SetPos(tr.HitPos)
 
 	money:Spawn()
