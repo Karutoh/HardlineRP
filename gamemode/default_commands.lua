@@ -75,3 +75,40 @@ HRP.AddCommand("dropweapon", "Allows you to drop your current weapon.", function
 	end
 
 end)
+
+HRP.AddCommand("dropmoney", "Allows you to drop a certain amount of money.", function(ply, args) 
+	if !args[1] then return end
+
+	local amount = tonumber(args[1])
+
+	if !isnumber(amount) then return end
+	
+	if amount > ply:GetNWInt("money") then
+		HRP.NotifyPlayer(ply, "You do not have enough money to drop that much!", 2, "hint")
+		return
+	end
+
+	if amount <= 0 then
+		HRP.NotifyPlayer(ply, "You must drop a higher amount!", 2, "hint")
+		return
+	end
+
+	ply:SetNWInt("money", ply:GetNWInt("money") - amount)
+
+	local money = ents.Create("hrp_money")
+	money:SetNWInt("amount", amount)
+	money:SetModel("models/props/cs_assault/money.mdl")
+
+	local trace = {}
+    trace.start = ply:EyePos()
+    trace.endpos = trace.start + ply:GetAimVector() * 85
+    trace.filter = ply
+
+    local tr = util.TraceLine(trace)
+
+	money:SetPos(tr.HitPos)
+
+	money:Spawn()
+	money:DropToFloor()
+
+end)

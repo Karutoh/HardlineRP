@@ -59,7 +59,6 @@ function GM:PlayerInitialSpawn(ply)
 	ply:SetNWBool("HRP_tased", false)
 	ply:SetNWBool("HRP_handcuffed", false)
 	ply:SetNWString("HRP_PlayerCuffedWeapons", "")
-
 end
 
 function GM:AllowPlayerPickup(ply, ent)

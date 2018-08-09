@@ -11,7 +11,7 @@ ENT.Model = "models/xqm/boxfull.mdl"
 
 function ENT:Initialize()
 	if SERVER then
-		self:SetModel( self.Model )
+		self:SetModel(self.Model)
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
