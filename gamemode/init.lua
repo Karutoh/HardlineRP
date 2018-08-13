@@ -28,6 +28,8 @@ include("f4menu/server.lua")
 include("money/server.lua")
 include("skills/server.lua")
 include("skills/shared.lua")
+include("ragdoll/server.lua")
+include("stamina/server.lua")
 include("default_commands.lua")
 
 function HRP.CheckDir()
@@ -63,6 +65,11 @@ function GM:PlayerInitialSpawn(ply)
 	ply:SetNWBool("HRP_handcuffed", false)
 	ply:SetNWString("HRP_PlayerCuffedWeapons", "")
 end
+
+hook.Add("PlayerSpawn", "HRP_InitHealth", function (ply)
+	ply:SetMaxHealth(100)
+	ply:SetHealth(ply:GetMaxHealth())
+end)
 
 function GM:AllowPlayerPickup(ply, ent)
 	if ply:GetNWBool("HRP_handcuffed") == true then

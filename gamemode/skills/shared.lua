@@ -1,3 +1,1 @@
-function HRP.GetMaxSkillCount()
-    return 10
-end
+HRP.maxSkillCount = CreateConVar("hrp_maxskillcount", 10, FCVAR_ARCHIVE)

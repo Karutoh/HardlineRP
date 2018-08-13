@@ -16,6 +16,42 @@ surface.CreateFont("HUD", {
 	outline = false,
 })
 
+surface.CreateFont("ExpBar", {
+	font = "Arial",
+	extended = false,
+	size = 22,
+	weight = 500,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = false,
+	outline = true,
+})
+
+surface.CreateFont("Level", {
+	font = "Arial",
+	extended = false,
+	size = 22,
+	weight = 500,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = false,
+	outline = true,
+})
+
 surface.CreateFont("headerFont", {
 	font = "Arial",
 	extended = false,
