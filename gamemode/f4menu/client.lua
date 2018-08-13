@@ -2,11 +2,11 @@ local f4Menu = nil
 local currentTab = 1
 local tabs = {}
 
-FrameColor = Color(35, 39, 50, 255)
-ButtonColor = Color(35, 39, 50, 255)
-ButtonHoverColor = Color(22, 26, 37, 255)
-tabPanelColor = Color(35, 39, 50, 255)
-panelColor = Color(150, 150, 150, 255)
+local FrameColor = Color(35, 39, 50, 255)
+local ButtonColor = Color(35, 39, 50, 255)
+local ButtonHoverColor = Color(22, 26, 37, 255)
+local tabPanelColor = Color(35, 39, 50, 255)
+local panelColor = Color(150, 150, 150, 255)
 
 
 function HRP.AddF4MenuTab(title, cb)

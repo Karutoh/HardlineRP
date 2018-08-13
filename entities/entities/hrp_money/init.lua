@@ -4,11 +4,11 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:OnInitialize()
-	
+	self:SetNWInt("amount", 100)
 end
 
 function ENT:OnUse(ply)
-	ply:SetNWInt("money", ply:GetNWInt("money") + (self:GetNWInt("amount") or 0))
-	HRP.NotifyPlayer(ply, "You have picked up $" .. (self:GetNWInt("amount") or 0) .. "!", 2, "hint")
+	ply:SetNWInt("holding", ply:GetNWInt("holding") + self:GetNWInt("amount"))
+	HRP.NotifyPlayer(ply, "You have picked up $" .. self:GetNWInt("amount") .. "!", 2, "hint")
 	self:Remove()
 end
