@@ -6,6 +6,8 @@ include("f4menu/client.lua")
 include("jobs/client.lua")
 include("entity_ownership/shared.lua")
 include("door_ownership/client.lua")
+include("skills/client.lua")
+include("skills/shared.lua")
 
 function CreateMsgBox(msg)
     local infoF = vgui.Create("DFrame")
