@@ -26,7 +26,7 @@ end)
 
 hook.Add("HRP_InitPlayerData", "HRP_InitSkills", function (ply)
     ply:SetNWInt("level", 1)
-    ply:SetNWInt("maxExp", 0)
+    ply:SetNWInt("maxExp", 100)
     ply:SetNWInt("exp", 0)
     ply:SetNWInt("strength", 1)
     ply:SetNWInt("perception", 1)

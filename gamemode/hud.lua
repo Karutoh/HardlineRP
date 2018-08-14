@@ -110,8 +110,8 @@ local hide = {
     ["CHudBattery"] = true,
     ["CHudCrosshair"] = true,
     ["CHudHealth"] = true,
-    ["CHudAmmo"] = true,
-    ["CHudSecondaryAmmo"] = true
+    --["CHudAmmo"] = true,
+    --["CHudSecondaryAmmo"] = true
 }
 
 hook.Add("HUDShouldDraw", "HRP_HideHUD", function (name)
