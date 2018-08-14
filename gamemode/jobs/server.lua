@@ -1,5 +1,25 @@
 local jobs = {}
 
+hook.Add("HRP_SavePlayerData", "HRP_CacheJob", function (f, ply)
+    local jobC = ply:GetNWString("jobCategory")
+    f:WriteULong(#jobC)
+    f:Write(jobC)
+
+    local jobT = ply:GetNWString("jobTitle")
+    f:WriteULong(#jobT)
+    f:Write(jobT)
+
+    local jobR = ply:GetNWString("jobRank")
+    f:WriteULong(#jobR)
+    f:Write(jobR)
+end)
+
+hook.Add("HRP_LoadPlayerData", "HRP_CacheSkills", function (f, ply)
+    ply:SetNWString("jobCategory", f:Read(f:ReadULong()))
+    ply:SetNWString("jobTitle", f:Read(f:ReadULong()))
+    ply:SetNWString("jobRank", f:Read(f:ReadULong()))
+end)
+
 hook.Add("HRP_InitPlayerData", "HRP_InitJobInfo", function (ply)
     ply:SetNWString("jobCategory", "")
     ply:SetNWString("jobTitle", "")
