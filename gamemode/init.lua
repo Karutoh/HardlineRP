@@ -9,6 +9,7 @@ AddCSLuaFile("entity_ownership/shared.lua")
 AddCSLuaFile("door_ownership/client.lua")
 AddCSLuaFile("skills/client.lua")
 AddCSLuaFile("skills/shared.lua")
+AddCSLuaFile("administration/client.lua")
 
 include("shared.lua")
 include("resources.lua")

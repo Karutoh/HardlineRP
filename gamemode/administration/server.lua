@@ -1,3 +1,15 @@
+local cmdName = "menu"
+
+hook.Add("PlayerSay", "HRP_OpenAdminMenu", function(ply, text, team)
+	if string.StartWith(text, "!" .. cmdName) then
+		text = string.Trim(string.lower(text))
+		net.Start("HRP_OpenAdminMenu")
+		net.Send(ply)
+		return ""
+	end
+	return true
+end)
+
 hook.Add("HRP_SavePlayerData", "HRP_CacheAdminRank", function (f, ply)
     local adminRank = ply:GetNWString("adminRank")
     f:WriteULong(string.len(adminRank))
