@@ -1,38 +1,43 @@
+local skills = {
+    "strength", 
+    "perception", 
+    "endurance",
+    "charisma", 
+    "intelligence", 
+    "agility",
+	"luck"
+}
+
+function HRP.GetSkills()
+	return skills
+end
+
 hook.Add("HRP_SavePlayerData", "HRP_CacheSkills", function (f, ply)
     f:WriteULong(ply:GetNWInt("level"))
     f:WriteULong(ply:GetNWInt("maxExp"))
     f:WriteULong(ply:GetNWInt("exp"))
-    f:WriteByte(ply:GetNWInt("strength"))
-    f:WriteByte(ply:GetNWInt("perception"))
-    f:WriteByte(ply:GetNWInt("endurance"))
-    f:WriteByte(ply:GetNWInt("charisma"))
-    f:WriteByte(ply:GetNWInt("intelligence"))
-    f:WriteByte(ply:GetNWInt("agility"))
-    f:WriteByte(ply:GetNWInt("luck"))
+
+	for i = 1, #skills do
+		f:WriteByte(ply:GetNWInt(skills[i]))
+	end
 end)
 
 hook.Add("HRP_LoadPlayerData", "HRP_CacheSkills", function (f, ply)
     ply:SetNWInt("level", f:ReadULong())
     ply:SetNWInt("maxExp", f:ReadULong())
     ply:SetNWInt("exp", f:ReadULong())
-    ply:SetNWInt("strength", f:ReadByte())
-    ply:SetNWInt("perception", f:ReadByte())
-    ply:SetNWInt("endurance", f:ReadByte())
-    ply:SetNWInt("charisma", f:ReadByte())
-    ply:SetNWInt("intelligence", f:ReadByte())
-    ply:SetNWInt("agility", f:ReadByte())
-    ply:SetNWInt("luck", f:ReadByte())
+    
+	for i = 1, #skills do
+		ply:SetNWInt(skills[i], f:ReadByte())
+	end
 end)
 
 hook.Add("HRP_InitPlayerData", "HRP_InitSkills", function (ply)
     ply:SetNWInt("level", 1)
     ply:SetNWInt("maxExp", 100)
     ply:SetNWInt("exp", 0)
-    ply:SetNWInt("strength", 1)
-    ply:SetNWInt("perception", 1)
-    ply:SetNWInt("endurance", 1)
-    ply:SetNWInt("charisma", 1)
-    ply:SetNWInt("intelligence", 1)
-    ply:SetNWInt("agility", 1)
-    ply:SetNWInt("luck", 1)
+    
+	for i = 1, #skills do
+		ply:SetNWInt(skills[i], 1)
+	end
 end)

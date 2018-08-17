@@ -32,6 +32,7 @@ end
 
 net.Receive("HRP_OpenF4Menu", function (len, ply)
 	HRP.jobsTable = net.ReadTable()
+	HRP.skillsTable = net.ReadTable()
 
 	if gui.IsGameUIVisible() then
 		return
@@ -78,11 +79,13 @@ net.Receive("HRP_OpenF4Menu", function (len, ply)
 	tabPanel.Paint = function()
 		draw.RoundedBox(0,0,0,tabPanel:GetWide(),tabPanel:GetTall(),tabPanelColor)
 	end
+	tabPanel:InvalidateParent(true)
 
 	local closeButton = vgui.Create("DButton", leftPanel)
 	closeButton:SetHeight(85)
 	closeButton:Dock(BOTTOM)
 	closeButton:SetText("")
+	closeButton:InvalidateParent(true)
 
 	closeButton.DoClick = function()
 		f4Menu:Close()
@@ -118,6 +121,7 @@ net.Receive("HRP_OpenF4Menu", function (len, ply)
 	div:SetLeftWidth(f4Menu:GetWide() / 4)
 	div:SetLeftMin(f4Menu:GetWide() / 4)
 	div:SetRightMin(f4Menu:GetWide() / 2)
+	div:InvalidateParent(true)
 
 	local pad = 5
 
@@ -143,6 +147,8 @@ net.Receive("HRP_OpenF4Menu", function (len, ply)
 			surface.SetTextPos((tab:GetWide() / 2) - (width / 2), (tab:GetTall() / 2) - (height / 2))
 			surface.DrawText(tabs[i].title)
 		end
+
+		panel:InvalidateParent(true)
 
 		tab.DoClick = function ()
 			ShowTab(panel, i)

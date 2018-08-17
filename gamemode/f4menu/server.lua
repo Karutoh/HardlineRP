@@ -2,12 +2,18 @@ function GM:ShowSpare2(ply)
 	net.Start("HRP_OpenF4Menu")
 
 		local table = HRP.GetJobsTable()
+		local skills = HRP.GetSkills()
 
 		if !table then
 			table = {}
 		end
 
+		if !skills then
+			skills = {}
+		end
+
 		net.WriteTable(table)
+		net.WriteTable(skills)
 
 	net.Send(ply)
 end
