@@ -1,3 +1,5 @@
+HRP.defaultJobs = CreateConVar("hrp_defaultjobs", 1, FCVAR_ARCHIVE)
+
 if !HRP.defaultJobs then return false end
 
 HRP.AddJobCategory("Police Department",

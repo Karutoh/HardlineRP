@@ -15,13 +15,12 @@ AddCSLuaFile("administration/client.lua")
 include("shared.lua")
 include("resources.lua")
 
-HRP.defaultJobs = true
-
 include("network_strings.lua")
 include("jobs/server.lua")
 include("default_jobs.lua")
 --include("new_life_name/server.lua")
 include("saved_data/server.lua")
+include("commands/server.lua")
 include("administration/server.lua")
 include("entity_ownership/server.lua")
 include("entity_ownership/shared.lua")

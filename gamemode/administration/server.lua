@@ -1,13 +1,26 @@
 local cmdName = "menu"
 
-hook.Add("PlayerSay", "HRP_OpenAdminMenu", function(ply, text, team)
-	if string.StartWith(text, "!" .. cmdName) then
-		text = string.Trim(string.lower(text))
-		net.Start("HRP_OpenAdminMenu")
-		net.Send(ply)
-		return ""
-	end
-	return true
+hook.Add("PlayerSay", "HRP_Commands", function(ply, txt, teamChat)
+    if txt[1] == HRP.CmdInitiator:GetString() then
+        local args = string.Split(string.sub(txt, 2), " ")
+
+        local cmd = HRP.GetCommand(args[1])
+        if !cmd then
+            ply:ChatPrint("That is not a valid command.")
+            return ""
+        end
+
+        if !HRP.CanUseCmd(ply:GetNWString("adminRank"), args[1]) then
+            ply:ChatPrint("You do not have rights to use this command.")
+            return ""
+        end
+
+        cmd.cb(ply, args)
+
+        return ""
+    end
+
+    return txt
 end)
 
 hook.Add("HRP_SavePlayerData", "HRP_CacheAdminRank", function (f, ply)
@@ -144,6 +157,20 @@ end
 
 function HRP.GetAdminRanks()
     return ranks
+end
+
+function HRP.CanUseCmd(adminRank, cmdIdentifier)
+    for i = 1, #ranks do
+        if ranks[i].title == adminRank then
+            for c = 1, #ranks[i].availableCmds do
+                if ranks[i].availableCmds[c] == ranks[i].availableCmds then
+                    return true
+                end
+            end
+        end
+    end
+
+    return false
 end
 
 hook.Add("Initialize", "HRP_LoadAdminRanks", function ()
