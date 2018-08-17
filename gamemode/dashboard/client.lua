@@ -8,7 +8,14 @@ HRP.AddF4MenuTab("Dashboard", function (panel)
 
 		surface.SetFont("buttonFont")
 		surface.SetTextColor(255, 255, 255, 255)
-		local message = "Welcome back, " .. LocalPlayer():Nick() .. "!"
+
+		local name = LocalPlayer():GetNWString("rpName")
+
+		if name == nil || name == "" then
+			name = "Unknown"
+		end
+
+		local message = "Welcome back, " .. name .. "!"
 		local width, height = surface.GetTextSize(message)
 		surface.SetTextPos(5, (welcomeMessage:GetTall() / 2) - (height / 2))
 		surface.DrawText(message)

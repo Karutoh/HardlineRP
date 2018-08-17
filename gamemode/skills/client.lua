@@ -1,7 +1,5 @@
 HRP.AddF4MenuTab("Skills", function (panel)
 
-print(panel:GetWide())
-
 local directory = "skills/"
 
 local scroll = vgui.Create("DScrollPanel", panel)
