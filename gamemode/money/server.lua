@@ -1,11 +1,11 @@
-hook.Add("HRP_SavePlayerData", "HRP_CacheMoney", function (f, ply)
-    f:WriteLong(ply:GetNWInt("holding"))
-    f:WriteLong(ply:GetNWInt("bank"))
+hook.Add("HRP_SavePlayerData", "HRP_CacheMoney", function (ply)
+    HRP.WriteVar(ply.data, HRP.DatabaseType.L, "holding", ply:GetNWInt("holding"))
+    HRP.WriteVar(ply.data, HRP.DatabaseType.L, "bank", ply:GetNWInt("bank"))
 end)
 
-hook.Add("HRP_LoadPlayerData", "HRP_CacheMoney", function (f, ply)
-    ply:SetNWInt("holding", f:ReadLong())
-    ply:SetNWInt("bank", f:ReadLong())
+hook.Add("HRP_LoadPlayerData", "HRP_CacheMoney", function (ply)
+    ply:SetNWInt("holding", HRP.ReadVar(ply.data, HRP.DatabaseType.L, "holding", 0))
+    ply:SetNWInt("bank", HRP.ReadVar(ply.data, HRP.DatabaseType.L, "bank", 0))
 end)
 
 hook.Add("HRP_InitPlayerData", "HRP_InitMoney", function (ply)

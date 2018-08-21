@@ -15,32 +15,13 @@ local function DeleteSave(ply)
 end
 
 local function Save(ply)
-    local fName = "HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt"
-
     CheckPlyDir(ply)
 
-    local f = file.Open(fName, "wb", "DATA")
-
-    if !f then
-        if file.Exists(fName, "DATA") then
-            ply:ChatPrint("Server - Failed to save your player data because another application currently has it open.")
-
-            return false
-        end
-
-        file.Write(fName, "")
-
-        return Save(ply)
+    if !HRP.SaveData(ply.data) then
+        return false
     end
 
-    local adminR = ply:GetNWString("adminRank")
-    f:WriteULong(string.len(adminR))
-    f:Write(adminR)
-
-    hook.Call("HRP_SavePlayerData", nil, f, ply)
-
-    f:Flush()
-    f:Close()
+    hook.Call("HRP_SavePlayerData", nil, ply)
 
     return true
 end
@@ -50,30 +31,16 @@ local function Load(ply)
         return false
     end
 
-    local f = file.Open("HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt", "rb", "DATA")
+    ply.data = HRP.LoadData(ply.data)
 
-    if !f then
-        return false
-    end
-
-    if f:Size() == 0 then
-        f:Close()
-
-        return false
-    end
-
-    if !HRP.SetPlayerAdminRank(ply, f:Read(f:ReadULong()) or "") then
-        ply:ChatPrint("Server - Loaded admin rank, but it does not exist.")
-    end
-
-    hook.Call("HRP_LoadPlayerData", nil, f, ply)
-
-    f:Close()
+    hook.Call("HRP_LoadPlayerData", nil, ply)
 
     return true
 end
 
 hook.Add("PlayerInitialSpawn", "HRP_SavePlayerData", function (ply)
+    ply.data = HRP.Database("HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt")
+
     hook.Call("HRP_InitPlayerData", nil, ply)
 
     if Load(ply) then

@@ -17,7 +17,7 @@ function HRP.Database(fileName)
     }
 end
 
-function HRP.ReadVariable(database, type, id, default)
+function HRP.ReadVar(database, type, id, default)
     default = default or 0
 
     for i = 1, #database.data do
@@ -31,7 +31,7 @@ function HRP.ReadVariable(database, type, id, default)
     return default
 end
 
-function HRP.WriteVariable(database, type, id, v)
+function HRP.WriteVar(database, type, id, v)
     for i = 1, #database.data do
         if database.data[i].type == type then
             if database.data[i].id == id then

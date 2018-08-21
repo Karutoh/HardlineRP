@@ -23,14 +23,12 @@ hook.Add("PlayerSay", "HRP_Commands", function(ply, txt, teamChat)
     return txt
 end)
 
-hook.Add("HRP_SavePlayerData", "HRP_CacheAdminRank", function (f, ply)
-    local adminRank = ply:GetNWString("adminRank")
-    f:WriteULong(string.len(adminRank))
-    f:Write(adminRank)
+hook.Add("HRP_SavePlayerData", "HRP_CacheAdminRank", function (ply)
+    HRP.WriteVar(ply.data, HRP.DatabaseType.STR, "adminRank", ply:GetNWString("adminRank"))
 end)
 
-hook.Add("HRP_LoadPlayerData", "HRP_CacheAdminRank", function (f, ply)
-    ply:SetNWString("adminRank", f:Read(f:ReadULong()))
+hook.Add("HRP_LoadPlayerData", "HRP_CacheAdminRank", function (ply)
+    ply:SetNWString("adminRank", HRP.ReadVar(ply.data, HRP.DatabaseType.STR, "adminRank", ""))
 end)
 
 hook.Add("HRP_InitPlayerData", "HRP_InitAdminRank", function (ply)

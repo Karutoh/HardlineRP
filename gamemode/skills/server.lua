@@ -12,23 +12,23 @@ function HRP.GetSkills()
 	return skills
 end
 
-hook.Add("HRP_SavePlayerData", "HRP_CacheSkills", function (f, ply)
-    f:WriteULong(ply:GetNWInt("level"))
-    f:WriteULong(ply:GetNWInt("maxExp"))
-    f:WriteULong(ply:GetNWInt("exp"))
+hook.Add("HRP_SavePlayerData", "HRP_CacheSkills", function (ply)
+    HRP.WriteVar(ply.data, HRP.DatabaseType.UL, "level", ply:GetNWInt("level"))
+    HRP.WriteVar(ply.data, HRP.DatabaseType.UL, "maxExp", ply:GetNWInt("maxExp"))
+    HRP.WriteVar(ply.data, HRP.DatabaseType.UL, "exp", ply:GetNWInt("exp"))
 
-	for i = 1, #skills do
-		f:WriteByte(ply:GetNWInt(skills[i]))
+    for i = 1, #skills do
+        HRP.WriteVar(ply.data, HRP.DatabaseType.UL, skills[i], ply:GetNWInt(skills[i]))
 	end
 end)
 
-hook.Add("HRP_LoadPlayerData", "HRP_CacheSkills", function (f, ply)
-    ply:SetNWInt("level", f:ReadULong())
-    ply:SetNWInt("maxExp", f:ReadULong())
-    ply:SetNWInt("exp", f:ReadULong())
+hook.Add("HRP_LoadPlayerData", "HRP_CacheSkills", function (ply)
+    ply:SetNWInt("level", HRP.ReadVar(ply.data, HRP.DatabaseType.UL, "level", 1))
+    ply:SetNWInt("maxExp", HRP.ReadVar(ply.data, HRP.DatabaseType.UL, "maxExp", 100))
+    ply:SetNWInt("exp", HRP.ReadVar(ply.data, HRP.DatabaseType.UL, "exp", 0))
     
 	for i = 1, #skills do
-		ply:SetNWInt(skills[i], f:ReadByte())
+		ply:SetNWInt(skills[i], HRP.ReadVar(ply.data, HRP.DatabaseType.UL, skills[i], 1))
 	end
 end)
 
