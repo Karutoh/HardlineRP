@@ -10,6 +10,32 @@ local function CheckPlyDir(ply)
     return b
 end
 
+local function DataEquals(oldData, newData)
+    if oldData.fileName != newData.fileName then
+        return false
+    end
+
+    if #oldData.data != #newData.data then
+        return false
+    end
+
+    for i = 1, #newData.data do
+        if oldData.data[i].type != newData.data[i].type then
+            return false
+        end
+
+        if oldData.data[i].id != newData.data[i].id then
+            return false
+        end
+
+        if oldData.data[i].v != newData.data[i].v then
+            return false
+        end
+    end
+
+    return true
+end
+
 local function DeleteSave(ply)
     file.Write("HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt", "")
 end
@@ -35,7 +61,7 @@ local function Load(ply)
 
     ply.data = HRP.LoadData(ply.data)
 
-    if ply.data == d then
+    if !DataEquals(d, ply.data) then
         return false
     end
 
