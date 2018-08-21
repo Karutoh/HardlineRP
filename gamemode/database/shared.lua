@@ -37,12 +37,14 @@ function HRP.WriteVariable(database, type, id, v)
             if database.data[i].id == id then
                 database.data[i].v = v
 
-                return
+                return false
             end
         end
     end
 
     table.insert(database.data, {type = type, id = id, v = v})
+
+    return true
 end
 
 function HRP.LoadData(database)
