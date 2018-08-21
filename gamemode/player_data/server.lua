@@ -17,11 +17,11 @@ end
 local function Save(ply)
     CheckPlyDir(ply)
 
+    hook.Call("HRP_SavePlayerData", nil, ply)
+
     if !HRP.SaveData(ply.data) then
         return false
     end
-
-    hook.Call("HRP_SavePlayerData", nil, ply)
 
     return true
 end
@@ -31,7 +31,13 @@ local function Load(ply)
         return false
     end
 
+    local d = ply.data
+
     ply.data = HRP.LoadData(ply.data)
+
+    if ply.data == d then
+        return false
+    end
 
     hook.Call("HRP_LoadPlayerData", nil, ply)
 

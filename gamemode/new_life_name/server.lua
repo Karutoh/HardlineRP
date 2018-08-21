@@ -1,5 +1,5 @@
 hook.Add("HRP_SavePlayerData", "HRP_CacheRpName", function (ply)
-    HRP.WriteVar(ply.data, HRP.DatabaseType.STR, "rpName", rpName)
+    HRP.WriteVar(ply.data, HRP.DatabaseType.STR, "rpName", ply:GetNWString("rpName"))
 end)
 
 hook.Add("HRP_LoadPlayerData", "HRP_CacheRpName", function (ply)
