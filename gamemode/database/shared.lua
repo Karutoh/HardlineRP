@@ -1,13 +1,13 @@
 HRP.DatabaseType = {
-    BYTE = 0,
-    BOOL = 1,
-    STR = 2,
-    UL = 3,
-    L = 4,
-    US = 5,
-    S = 6,
-    D = 7,
-    F = 8
+    BYTE = 0, --Single Byte
+    BOOL = 1, --Boolean
+    STR = 2, --String
+    UL = 3, --Unsigned Long
+    L = 4, --Long
+    US = 5, --Unsigned Short
+    S = 6, --Short
+    D = 7, --Double
+    F = 8 --Float
 }
 
 function HRP.Database(fileName)
