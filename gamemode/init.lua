@@ -13,6 +13,19 @@ AddCSLuaFile("skills/client.lua")
 AddCSLuaFile("skills/shared.lua")
 AddCSLuaFile("administration/client.lua")
 
+function HRP.CheckDir()
+    if !file.Exists("HRP", "DATA") then
+        file.CreateDir("HRP")
+        file.CreateDir("HRP/player_data")
+        return false
+    elseif !file.Exists("HRP/player_data", "DATA") then
+        file.CreateDir("HRP/player_data")
+        return false
+    end
+
+    return true
+end
+
 include("shared.lua")
 include("resources.lua")
 
@@ -35,19 +48,6 @@ include("ragdoll/server.lua")
 include("stamina/server.lua")
 include("default_commands.lua")
 include("dashboard/server.lua")
-
-function HRP.CheckDir()
-    if !file.Exists("HRP", "DATA") then
-        file.CreateDir("HRP")
-        file.CreateDir("HRP/player_data")
-        return false
-    elseif !file.Exists("HRP/player_data", "DATA") then
-        file.CreateDir("HRP/player_data")
-        return false
-    end
-
-    return true
-end
 
 function GM:ShowSpare1(ply)
 	net.Start( "HRP_EnableMouse" )
