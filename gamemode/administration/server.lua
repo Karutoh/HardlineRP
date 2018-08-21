@@ -121,7 +121,9 @@ function HRP.AdminRank(title)
     return {
         title = title,
         color = Color(255, 255, 255, 255),
-        availableCmds = {}
+        availableCmds = {},
+        viewAdminMenu = false,
+        canEditRoles = false
     }
 end
 

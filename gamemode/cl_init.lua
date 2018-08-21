@@ -1,6 +1,7 @@
 include("shared.lua")
 include("fonts.lua")
 include("hud.lua")
+include("database/shared.lua")
 include("new_life_name/client.lua")
 include("f4menu/client.lua")
 include("dashboard/client.lua")
