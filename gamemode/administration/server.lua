@@ -68,7 +68,7 @@ local function Load()
             table.insert(rank.availableCmds, f:Read(f:ReadULong()))
         end
         rank.viewAdminMenu = f:ReadBool()
-        rank.canEditRoles = f:ReadBool()
+        rank.editAdminRanks = f:ReadBool()
 
         table.insert(ranks, rank)
     end
@@ -110,7 +110,7 @@ local function Save()
             f:Write(ranks[i].availableCmds[c])
         end
         f:WriteBool(ranks[i].viewAdminMenu)
-        f:WriteBool(ranks[i].canEditRoles)
+        f:WriteBool(ranks[i].editAdminRanks)
     end
 
     f:Flush()
@@ -125,7 +125,7 @@ function HRP.AdminRank(title)
         color = Color(255, 255, 255, 255),
         availableCmds = {},
         viewAdminMenu = false,
-        canEditRoles = false
+        editAdminRanks = false
     }
 end
 
