@@ -1,10 +1,5 @@
 HRP.CmdInitiator = CreateConVar("hrp_cmdinitiator", "/", FCVAR_ARCHIVE)
 
-HRP.NONE = 0
-HRP.ANYONE = 1
-HRP.BELOW = 2
-HRP.ALL = 4
-
 local cmds = {}
 
 function HRP.Command(identifier)

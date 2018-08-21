@@ -1,10 +1,6 @@
 HRP.minUnconscious = CreateConVar("hrp_minunconscious", 25, FCVAR_ARCHIVE)
 
 hook.Add("EntityTakeDamage", "HRP_Ragdoll", function (target, dmg)
-    if !target:IsPlayer() then
-        return true
-    end
-
     if (target:Health() / target:GetMaxHealth()) * 100 <= HRP.minUnconscious:GetInt() then
         local rag = ents.Create("prop_ragdoll")
         rag:SetPos(target:GetPos())

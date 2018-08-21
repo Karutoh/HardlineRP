@@ -108,7 +108,7 @@ end)
 local hide = {
 	["CHudHealth"] = true,
     ["CHudBattery"] = true,
-    ["CHudCrosshair"] = true,
+    --["CHudCrosshair"] = true,
     ["CHudHealth"] = true,
     --["CHudAmmo"] = true,
     --["CHudSecondaryAmmo"] = true
