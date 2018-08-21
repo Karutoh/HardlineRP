@@ -17,6 +17,32 @@ function HRP.Database(fileName)
     }
 end
 
+function HRP.DatabaseEquals(a, b)
+    if a.fileName != b.fileName then
+        return false
+    end
+
+    if #a.data != #b.data then
+        return false
+    end
+
+    for i = 1, #a.data do
+        if a.data[i].type != b.data[i].type then
+            return false
+        end
+
+        if a.data[i].id != b.data[i].id then
+            return false
+        end
+
+        if a.data[i].v != b.data[i].v then
+            return false
+        end
+    end
+
+    return true
+end
+
 function HRP.ReadVar(database, type, id, default)
     default = default or 0
 
