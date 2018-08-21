@@ -67,6 +67,8 @@ local function Load()
         for c = 1, cmds do
             table.insert(rank.availableCmds, f:Read(f:ReadULong()))
         end
+        rank.viewAdminMenu = f:ReadBool()
+        rank.canEditRoles = f:ReadBool()
 
         table.insert(ranks, rank)
     end
@@ -107,6 +109,8 @@ local function Save()
             f:WriteULong(string.len(ranks[i].availableCmds[c]))
             f:Write(ranks[i].availableCmds[c])
         end
+        f:WriteBool(ranks[i].viewAdminMenu)
+        f:WriteBool(ranks[i].canEditRoles)
     end
 
     f:Flush()

@@ -13,6 +13,8 @@ AddCSLuaFile("skills/client.lua")
 AddCSLuaFile("skills/shared.lua")
 AddCSLuaFile("administration/client.lua")
 
+include("shared.lua")
+
 function HRP.CheckDir()
     if !file.Exists("HRP", "DATA") then
         file.CreateDir("HRP")
@@ -26,9 +28,7 @@ function HRP.CheckDir()
     return true
 end
 
-include("shared.lua")
 include("resources.lua")
-
 include("database/shared.lua")
 include("network_strings.lua")
 include("jobs/server.lua")
