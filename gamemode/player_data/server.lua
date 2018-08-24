@@ -76,3 +76,38 @@ net.Receive("HRP_RpName", function ()
 
     Save(ply)
 end)
+
+function HRP.GetPlayerData(steamID)
+    if !HRP.CheckDir() then
+        return nil
+    end
+
+    local oldData = HRP.Database("hrp/player_data/" .. steamID .. "/player_data.txt")
+
+    local data = HRP.LoadData(oldData)
+
+    if HRP.DatabaseEquals(oldData, data) then
+        return nil
+    end
+
+    return data
+end
+
+function HRP.GetAllPlayerData(offlineOnly)
+    local files, directories = file.Find("hrp/player_data/*", "DATA")
+    local playerData = {}
+
+    for i = 1, #directories do
+        if offlineOnly then
+            if !player.GetBySteamID64(directories[i]) then
+                local data = HRP.Database("hrp/player_data/" .. directories[i] .. "/player_data.txt")
+
+                table.insert(player_data, {directories[i], HRP.LoadData(data)})
+            end
+        else
+            local data = HRP.Database("hrp/player_data/" .. directories[i] .. "/player_data.txt")
+
+            table.insert(player_data, {directories[i], HRP.LoadData(data)})
+        end
+    end
+end

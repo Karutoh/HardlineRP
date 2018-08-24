@@ -48,6 +48,7 @@ include("ragdoll/server.lua")
 include("stamina/server.lua")
 include("default_commands.lua")
 include("dashboard/server.lua")
+include("username_archive/server.lua")
 
 function GM:ShowSpare1(ply)
 	net.Start( "HRP_EnableMouse" )
