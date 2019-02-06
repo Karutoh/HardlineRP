@@ -15,7 +15,7 @@ AddCSLuaFile("administration/client.lua")
 
 include("shared.lua")
 
-function HRP.CheckDir()
+function CheckDir()
     if !file.Exists("HRP", "DATA") then
         file.CreateDir("HRP")
         file.CreateDir("HRP/player_data")
@@ -108,7 +108,7 @@ function GM:PlayerSpawnProp( ply, model )
 	return true
 end
 
-function HRP.NotifyPlayer(ply, str, duration, NotifyType)
+function NotifyPlayer(ply, str, duration, NotifyType)
 	net.Start("HRP_Notify")
 		net.WriteString(str)
 		net.WriteInt(duration, 32)

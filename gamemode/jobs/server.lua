@@ -1,15 +1,15 @@
 local jobs = {}
 
 hook.Add("HRP_SavePlayerData", "HRP_CacheJob", function (ply)
-    HRP.WriteVar(ply.data, HRP.DatabaseType.STR, "jobCategory", ply:GetNWString("jobCategory"))
-    HRP.WriteVar(ply.data, HRP.DatabaseType.STR, "jobTitle", ply:GetNWString("jobTitle"))
-    HRP.WriteVar(ply.data, HRP.DatabaseType.STR, "jobRank", ply:GetNWString("jobRank"))
+    WriteVar(ply.data, DatabaseType.STR, "jobCategory", ply:GetNWString("jobCategory"))
+    WriteVar(ply.data, DatabaseType.STR, "jobTitle", ply:GetNWString("jobTitle"))
+    WriteVar(ply.data, DatabaseType.STR, "jobRank", ply:GetNWString("jobRank"))
 end)
 
 hook.Add("HRP_LoadPlayerData", "HRP_CacheSkills", function (ply)
-    ply:SetNWString("jobCategory", HRP.ReadVar(ply.data, HRP.DatabaseType.STR, "jobCategory", ""))
-    ply:SetNWString("jobTitle", HRP.ReadVar(ply.data, HRP.DatabaseType.STR, "jobTitle", ""))
-    ply:SetNWString("jobRank", HRP.ReadVar(ply.data, HRP.DatabaseType.STR, "jobRank", ""))
+    ply:SetNWString("jobCategory", ReadVar(ply.data, DatabaseType.STR, "jobCategory", ""))
+    ply:SetNWString("jobTitle", ReadVar(ply.data, DatabaseType.STR, "jobTitle", ""))
+    ply:SetNWString("jobRank", ReadVar(ply.data, DatabaseType.STR, "jobRank", ""))
 end)
 
 hook.Add("HRP_InitPlayerData", "HRP_InitJobInfo", function (ply)
@@ -18,19 +18,19 @@ hook.Add("HRP_InitPlayerData", "HRP_InitJobInfo", function (ply)
     ply:SetNWString("jobRank", "")
 end)
 
-function HRP.FindRank(rank, rankTable)
+function FindRank(rank, rankTable)
     if rankTable.title == rank then
         return rankTable
     end
 
     for r = 1, #rankTable.promotions do
-        return HRP.FindRank(rank, rankTable.promotions[r])
+        return FindRank(rank, rankTable.promotions[r])
     end
 
     return nil
 end
 
-function HRP.JobRank(rankTitle)
+function JobRank(rankTitle)
     return {
         title = rankTitle,
         description = "",
@@ -42,7 +42,7 @@ function HRP.JobRank(rankTitle)
     }
 end
 
-function HRP.SetPlayerJob(ply, jobCategory, jobTitle, jobRank)
+function SetPlayerJob(ply, jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             for t = 1, #jobs[c].jobTitles do
@@ -64,7 +64,7 @@ function HRP.SetPlayerJob(ply, jobCategory, jobTitle, jobRank)
     return false
 end
 
-function HRP.AddJobCategory(jobCategory, desc)
+function AddJobCategory(jobCategory, desc)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             return false
@@ -75,7 +75,7 @@ function HRP.AddJobCategory(jobCategory, desc)
     return true
 end
 
-function HRP.AddJobTitle(jobCategory, jobTitle, abbr, desc)
+function AddJobTitle(jobCategory, jobTitle, abbr, desc)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             for t = 1, #jobs[c].jobTitles do
@@ -92,7 +92,7 @@ function HRP.AddJobTitle(jobCategory, jobTitle, abbr, desc)
     return false
 end
 
-function HRP.AddJobRank(jobCategory, jobTitle, jobRank)
+function AddJobRank(jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             for t = 1, #jobs[c].jobTitles do
@@ -114,7 +114,7 @@ function HRP.AddJobRank(jobCategory, jobTitle, jobRank)
     return false
 end
 
-function HRP.GetJobCategories()
+function GetJobCategories()
     local categories = {}
 
     for c = 1, #jobs do
@@ -124,7 +124,7 @@ function HRP.GetJobCategories()
     return categories
 end
 
-function HRP.GetJobTitles(jobCategory)
+function GetJobTitles(jobCategory)
     local titles = {}
 
     for c = 1, #jobs do
@@ -136,13 +136,13 @@ function HRP.GetJobTitles(jobCategory)
     return titles
 end
 
-function HRP.GetJobRank(jobCategory, jobTitle, jobRank)
+function GetJobRank(jobCategory, jobTitle, jobRank)
     for c = 1, #jobs do
         if jobs[c].title == jobCategory then
             for t = 1, #jobs[c].jobTitles do
                 if jobs[c].jobTitles[t].title == title then
                     for r = 1, #jobs[c].jobTitles[t].jobRanks do
-                        return HRP.FindRank(rank, jobs[c].jobTitles[t].jobRanks[r])
+                        return FindRank(rank, jobs[c].jobTitles[t].jobRanks[r])
                     end
                 end
             end
@@ -152,6 +152,6 @@ function HRP.GetJobRank(jobCategory, jobTitle, jobRank)
     return nil
 end
 
-function HRP.GetJobsTable()
+function GetJobsTable()
     return jobs
 end

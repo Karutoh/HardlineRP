@@ -1,4 +1,4 @@
-HRP.AddF4MenuTab("Skills", function (panel)
+AddF4MenuTab("Skills", function (panel)
 
 local directory = "skills/"
 
@@ -19,7 +19,7 @@ List:Dock(FILL)
 
 local AmountPerRow = 5
 
-for i = 1, #HRP.skillsTable do
+for i = 1, #skillsTable do
 	local ListItem = List:Add("DPanel")
 	ListItem:SetSize(scroll:GetWide() / AmountPerRow - 3, scroll:GetWide() / AmountPerRow)
 
@@ -30,7 +30,7 @@ for i = 1, #HRP.skillsTable do
 		draw.RoundedBox(0, 2, 2, ListItem:GetWide() - 4, ListItem:GetTall() - 4, Color(35, 39, 50, 255))
 
 		-- skill level
-		local level = tostring(LocalPlayer():GetNWInt(HRP.skillsTable[i]))
+		local level = tostring(LocalPlayer():GetNWInt(skillsTable[i]))
 
 		surface.SetFont("buttonFont")
 		surface.SetTextColor(255, 255, 255, 255)
@@ -42,7 +42,7 @@ for i = 1, #HRP.skillsTable do
 
 	end
 
-	local path = directory .. HRP.skillsTable[i] .. ".png"
+	local path = directory .. skillsTable[i] .. ".png"
 
 	if !file.Exists(path, "GAME") then
 		print("File at path " .. path .. " does not exist!")

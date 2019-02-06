@@ -1,4 +1,4 @@
-HRP.DatabaseType = {
+DatabaseType = {
     BYTE = 0, --Single Byte
     BOOL = 1, --Boolean
     STR = 2, --String
@@ -10,14 +10,14 @@ HRP.DatabaseType = {
     F = 8 --Float
 }
 
-function HRP.Database(fileName)
+function Database(fileName)
     return {
         fileName = fileName,
         data = {}
     }
 end
 
-function HRP.DatabaseEquals(a, b)
+function DatabaseEquals(a, b)
     if a.fileName != b.fileName then
         return false
     end
@@ -43,7 +43,7 @@ function HRP.DatabaseEquals(a, b)
     return true
 end
 
-function HRP.ReadVar(database, type, id, default)
+function ReadVar(database, type, id, default)
     default = default or 0
 
     for i = 1, #database.data do
@@ -57,7 +57,7 @@ function HRP.ReadVar(database, type, id, default)
     return default
 end
 
-function HRP.WriteVar(database, type, id, v)
+function WriteVar(database, type, id, v)
     PrintMessage(HUD_PRINTTALK, tostring(type) .. " " .. id .. " " .. v)
 
     for i = 1, #database.data do
@@ -75,7 +75,7 @@ function HRP.WriteVar(database, type, id, v)
     return true
 end
 
-function HRP.LoadData(database)
+function LoadData(database)
     local f = file.Open(database.fileName, "rb", "DATA")
 
     if !f then
@@ -95,23 +95,23 @@ function HRP.LoadData(database)
 
         local v = nil
 
-        if type == HRP.DatabaseType.BYTE then
+        if type == DatabaseType.BYTE then
             v = f:ReadByte()
-        elseif type == HRP.DatabaseType.BOOL then
+        elseif type == DatabaseType.BOOL then
             v = f:ReadBool()
-        elseif type == HRP.DatabaseType.STR then
+        elseif type == DatabaseType.STR then
             v = f:Read(f:ReadULong()) or ""
-        elseif type == HRP.DatabaseType.UL then
+        elseif type == DatabaseType.UL then
             v = f:ReadULong()
-        elseif type == HRP.DatabaseType.L then
+        elseif type == DatabaseType.L then
             v = f:ReadLong()
-        elseif type == HRP.DatabaseType.US then
+        elseif type == DatabaseType.US then
             v = f:ReadUShort()
-        elseif type == HRP.DatabaseType.S then
+        elseif type == DatabaseType.S then
             v = f:ReadShort()
-        elseif type == HRP.DatabaseType.D then
+        elseif type == DatabaseType.D then
             v = f:ReadDouble()
-        elseif type == HRP.DatabaseType.F then
+        elseif type == DatabaseType.F then
             v = f:ReadFloat()
         end
 
@@ -125,7 +125,7 @@ function HRP.LoadData(database)
     return database
 end
 
-function HRP.SaveData(database)
+function SaveData(database)
     local f = file.Open(database.fileName, "wb", "DATA")
 
     if !f then
@@ -135,7 +135,7 @@ function HRP.SaveData(database)
 
         file.Write(database.fileName, "")
 
-        return HRP.SaveData(database)
+        return SaveData(database)
     end
 
     for i = 1, #database.data do
@@ -143,24 +143,24 @@ function HRP.SaveData(database)
         f:WriteULong(string.len(database.data[i].id))
         f:Write(database.data[i].id)
 
-        if database.data[i].type == HRP.DatabaseType.BYTE then
+        if database.data[i].type == DatabaseType.BYTE then
             f:WriteByte(database.data[i].v)
-        elseif database.data[i].type == HRP.DatabaseType.BOOL then
+        elseif database.data[i].type == DatabaseType.BOOL then
             f:WriteBool(database.data[i].v)
-        elseif database.data[i].type == HRP.DatabaseType.STR then
+        elseif database.data[i].type == DatabaseType.STR then
             f:WriteULong(string.len(database.data[i].v))
             f:Write(database.data[i].v)
-        elseif database.data[i].type == HRP.DatabaseType.UL then
+        elseif database.data[i].type == DatabaseType.UL then
             f:WriteULong(database.data[i].v)
-        elseif database.data[i].type == HRP.DatabaseType.L then
+        elseif database.data[i].type == DatabaseType.L then
             f:WriteLong(database.data[i].v)
-        elseif database.data[i].type == HRP.DatabaseType.US then
+        elseif database.data[i].type == DatabaseType.US then
             f:WriteUShort(database.data[i].v)
-        elseif database.data[i].type == HRP.DatabaseType.S then
+        elseif database.data[i].type == DatabaseType.S then
             f:WriteShort(database.data[i].v)
-        elseif database.data[i].type == HRP.DatabaseType.D then
+        elseif database.data[i].type == DatabaseType.D then
             f:WriteDouble(database.data[i].v)
-        elseif database.data[i].type == HRP.DatabaseType.F then
+        elseif database.data[i].type == DatabaseType.F then
             f:WriteFloat(database.data[i].v)
         end
     end

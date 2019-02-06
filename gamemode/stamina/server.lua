@@ -1,5 +1,5 @@
-HRP.maxStaminaDepletion = CreateConVar("hrp_maxstaminadepletion", 15, FCVAR_ARCHIVE)
-HRP.maxStaminaRepletion = CreateConVar("hrp_maxstaminarepletion", 5, FCVAR_ARCHIVE)
+maxStaminaDepletion = CreateConVar("hrp_maxstaminadepletion", 15, FCVAR_ARCHIVE)
+maxStaminaRepletion = CreateConVar("hrp_maxstaminarepletion", 5, FCVAR_ARCHIVE)
 
 local moving = {}
 
@@ -27,7 +27,7 @@ hook.Add("Tick", "HRP_DepleteStamina", function ()
             if ply:GetNWInt("stamina") > 0 then
                 ply:SetRunSpeed(400)
 
-                ply:SetNWInt("stamina", ply:GetNWInt("stamina") - (HRP.maxStaminaDepletion:GetInt() - ((ply:GetNWInt("agility") / HRP.maxSkillCount:GetInt()) * (HRP.maxStaminaDepletion:GetInt() * 0.75))) * FrameTime())
+                ply:SetNWInt("stamina", ply:GetNWInt("stamina") - (maxStaminaDepletion:GetInt() - ((ply:GetNWInt("agility") / maxSkillCount:GetInt()) * (maxStaminaDepletion:GetInt() * 0.75))) * FrameTime())
                 
                 if ply:GetNWInt("stamina") <= 0 then
                     ply:SetRunSpeed(ply:GetWalkSpeed())
@@ -37,7 +37,7 @@ hook.Add("Tick", "HRP_DepleteStamina", function ()
             end
         else
             if ply:GetNWInt("stamina") <= ply:GetNWInt("maxStamina") then
-                ply:SetNWInt("stamina", ply:GetNWInt("stamina") + ((ply:GetNWInt("agility") / HRP.maxSkillCount:GetInt()) * HRP.maxStaminaRepletion:GetInt()) * FrameTime())
+                ply:SetNWInt("stamina", ply:GetNWInt("stamina") + ((ply:GetNWInt("agility") / maxSkillCount:GetInt()) * maxStaminaRepletion:GetInt()) * FrameTime())
 
                 if ply:GetNWInt("stamina") > ply:GetNWInt("maxStamina") then
                     ply:SetNWInt("stamina", ply:GetNWInt("maxStamina"))

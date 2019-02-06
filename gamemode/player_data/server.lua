@@ -1,5 +1,5 @@
 local function CheckPlyDir(ply)
-    local b = HRP.CheckDir()
+    local b = CheckDir()
     local d = "HRP/player_data/" .. ply:SteamID64()
 
     if !file.Exists(d, "DATA") then
@@ -19,7 +19,7 @@ local function Save(ply)
 
     hook.Call("HRP_SavePlayerData", nil, ply)
 
-    if !HRP.SaveData(ply.data) then
+    if !SaveData(ply.data) then
         return false
     end
 
@@ -33,9 +33,9 @@ local function Load(ply)
 
     local d = ply.data
 
-    ply.data = HRP.LoadData(ply.data)
+    ply.data = LoadData(ply.data)
 
-    if !HRP.DatabaseEquals(d, ply.data) then
+    if !DatabaseEquals(d, ply.data) then
         return false
     end
 
@@ -45,7 +45,7 @@ local function Load(ply)
 end
 
 hook.Add("PlayerInitialSpawn", "HRP_SavePlayerData", function (ply)
-    ply.data = HRP.Database("HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt")
+    ply.data = Database("HRP/player_data/" .. ply:SteamID64() .. "/player_data.txt")
 
     hook.Call("HRP_InitPlayerData", nil, ply)
 
@@ -77,37 +77,37 @@ net.Receive("HRP_RpName", function ()
     Save(ply)
 end)
 
-function HRP.GetPlayerData(steamID)
-    if !HRP.CheckDir() then
+function GetPlayerData(steamID)
+    if !CheckDir() then
         return nil
     end
 
-    local oldData = HRP.Database("hrp/player_data/" .. steamID .. "/player_data.txt")
+    local oldData = Database("hrp/player_data/" .. steamID .. "/player_data.txt")
 
-    local data = HRP.LoadData(oldData)
+    local data = LoadData(oldData)
 
-    if HRP.DatabaseEquals(oldData, data) then
+    if DatabaseEquals(oldData, data) then
         return nil
     end
 
     return data
 end
 
-function HRP.GetAllPlayerData(offlineOnly)
+function GetAllPlayerData(offlineOnly)
     local files, directories = file.Find("hrp/player_data/*", "DATA")
     local playerData = {}
 
     for i = 1, #directories do
         if offlineOnly then
             if !player.GetBySteamID64(directories[i]) then
-                local data = HRP.Database("hrp/player_data/" .. directories[i] .. "/player_data.txt")
+                local data = Database("hrp/player_data/" .. directories[i] .. "/player_data.txt")
 
-                table.insert(player_data, {directories[i], HRP.LoadData(data)})
+                table.insert(player_data, {directories[i], LoadData(data)})
             end
         else
-            local data = HRP.Database("hrp/player_data/" .. directories[i] .. "/player_data.txt")
+            local data = Database("hrp/player_data/" .. directories[i] .. "/player_data.txt")
 
-            table.insert(player_data, {directories[i], HRP.LoadData(data)})
+            table.insert(player_data, {directories[i], LoadData(data)})
         end
     end
 end

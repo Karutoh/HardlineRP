@@ -1,7 +1,7 @@
 cmds = {}
 cmds.Identifier = "/"
 
-function HRP.AddCommand(name, desc, func)
+function AddCommand(name, desc, func)
 	
 	for i = 1, #cmds do
 		if cmds[i].name == name then
@@ -52,7 +52,7 @@ local DropBlackList = {
 	"gmod_camera"
 }
 
-HRP.AddCommand("dropweapon", "Allows you to drop your current weapon.", function(ply, args) 
+AddCommand("dropweapon", "Allows you to drop your current weapon.", function(ply, args) 
 
 	isDroppable = true
 
@@ -69,14 +69,14 @@ HRP.AddCommand("dropweapon", "Allows you to drop your current weapon.", function
 		end
 
 		if !InBlackList then
-			HRP.NotifyPlayer(ply, "You have dropped your current weapon!", 2, "hint")
+			NotifyPlayer(ply, "You have dropped your current weapon!", 2, "hint")
 			ply:DropWeapon(ply:GetActiveWeapon())
 		end
 	end
 
 end)
 
-HRP.AddCommand("dropmoney", "Allows you to drop a certain amount of money.", function(ply, args) 
+AddCommand("dropmoney", "Allows you to drop a certain amount of money.", function(ply, args) 
 	if !args[1] then return end
 
 	local amount = tonumber(args[1])
@@ -84,12 +84,12 @@ HRP.AddCommand("dropmoney", "Allows you to drop a certain amount of money.", fun
 	if !isnumber(amount) then return end
 	
 	if amount > ply:GetNWInt("money") then
-		HRP.NotifyPlayer(ply, "You do not have enough money to drop that much!", 2, "hint")
+		NotifyPlayer(ply, "You do not have enough money to drop that much!", 2, "hint")
 		return
 	end
 
 	if amount <= 0 then
-		HRP.NotifyPlayer(ply, "You must drop a higher amount!", 2, "hint")
+		NotifyPlayer(ply, "You must drop a higher amount!", 2, "hint")
 		return
 	end
 

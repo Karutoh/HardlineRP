@@ -1,16 +1,16 @@
 local cmdName = "menu"
 
 hook.Add("PlayerSay", "HRP_Commands", function(ply, txt, teamChat)
-    if txt[1] == HRP.CmdInitiator:GetString() then
+    if txt[1] == CmdInitiator:GetString() then
         local args = string.Split(string.sub(txt, 2), " ")
 
-        local cmd = HRP.GetCommand(args[1])
+        local cmd = GetCommand(args[1])
         if !cmd then
             ply:ChatPrint("That is not a valid command.")
             return ""
         end
 
-        if !HRP.CanUseCmd(ply:GetNWString("adminRank"), args[1]) then
+        if !CanUseCmd(ply:GetNWString("adminRank"), args[1]) then
             ply:ChatPrint("You do not have rights to use this command.")
             return ""
         end
@@ -24,11 +24,11 @@ hook.Add("PlayerSay", "HRP_Commands", function(ply, txt, teamChat)
 end)
 
 hook.Add("HRP_SavePlayerData", "HRP_CacheAdminRank", function (ply)
-    HRP.WriteVar(ply.data, HRP.DatabaseType.STR, "adminRank", ply:GetNWString("adminRank"))
+    WriteVar(ply.data, DatabaseType.STR, "adminRank", ply:GetNWString("adminRank"))
 end)
 
 hook.Add("HRP_LoadPlayerData", "HRP_CacheAdminRank", function (ply)
-    ply:SetNWString("adminRank", HRP.ReadVar(ply.data, HRP.DatabaseType.STR, "adminRank", ""))
+    ply:SetNWString("adminRank", ReadVar(ply.data, DatabaseType.STR, "adminRank", ""))
 end)
 
 hook.Add("HRP_InitPlayerData", "HRP_InitAdminRank", function (ply)
@@ -38,7 +38,7 @@ end)
 local ranks = {}
 
 local function Load()
-    if !HRP.CheckDir() then
+    if !CheckDir() then
         return false
     end
 
@@ -56,7 +56,7 @@ local function Load()
 
     local size = f:ReadULong()
     for i = 1, size do
-        local rank = HRP.AdminRank(f:Read(f:ReadULong()))
+        local rank = AdminRank(f:Read(f:ReadULong()))
         rank.color = {
             f:ReadByte(),
             f:ReadByte(),
@@ -80,7 +80,7 @@ end
 local function Save()
     local fName = "HRP/admin_ranks.txt"
 
-    HRP.CheckDir()
+    CheckDir()
 
     local f = file.Open(fName, "wb", "DATA")
 
@@ -119,7 +119,7 @@ local function Save()
     return true
 end
 
-function HRP.AdminRank(title)
+function AdminRank(title)
     return {
         title = title,
         color = Color(255, 255, 255, 255),
@@ -129,7 +129,7 @@ function HRP.AdminRank(title)
     }
 end
 
-function HRP.SetPlayerAdminRank(ply, adminRank)
+function SetPlayerAdminRank(ply, adminRank)
     if string.len(adminRank) == 0 then
         ply:SetNWString("adminRank", "")
         return true
@@ -145,7 +145,7 @@ function HRP.SetPlayerAdminRank(ply, adminRank)
     return false
 end
 
-function HRP.AddAdminRank(adminRank)
+function AddAdminRank(adminRank)
     for r = 1, #ranks do
         if ranks[r].title == adminRank.title then
             return false
@@ -159,11 +159,11 @@ function HRP.AddAdminRank(adminRank)
     return true
 end
 
-function HRP.GetAdminRanks()
+function GetAdminRanks()
     return ranks
 end
 
-function HRP.CanUseCmd(adminRank, cmdIdentifier)
+function CanUseCmd(adminRank, cmdIdentifier)
     for i = 1, #ranks do
         if ranks[i].title == adminRank then
             for c = 1, #ranks[i].availableCmds do

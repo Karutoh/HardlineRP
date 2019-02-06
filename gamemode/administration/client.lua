@@ -1,7 +1,7 @@
 local frame = nil
 local tabs = {}
 
-function HRP.AddAdminMenuTab(title, icon, cb)
+function AddAdminMenuTab(title, icon, cb)
 	
 	for i = 1, #tabs do
 		if tabs[i].title == title then
@@ -57,10 +57,10 @@ net.Receive("HRP_OpenAdminMenu", function (len, ply)
 	end
 end)
 
-HRP.AddAdminMenuTab("Commands", "icon16/cog.png", function(panel)
+AddAdminMenuTab("Commands", "icon16/cog.png", function(panel)
 	
 end)
 
-HRP.AddAdminMenuTab("User Management", "icon16/wrench.png", function(panel)
+AddAdminMenuTab("User Management", "icon16/wrench.png", function(panel)
 
 end)

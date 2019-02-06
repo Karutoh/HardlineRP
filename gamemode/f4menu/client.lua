@@ -9,7 +9,7 @@ local tabPanelColor = Color(35, 39, 50, 255)
 local panelColor = Color(150, 150, 150, 255)
 
 
-function HRP.AddF4MenuTab(title, cb)
+function AddF4MenuTab(title, cb)
 	for i = 1, #tabs do
 		if tabs[i].title == title then
 			return false
@@ -31,8 +31,8 @@ local function ShowTab(panel, index)
 end
 
 net.Receive("HRP_OpenF4Menu", function (len, ply)
-	HRP.jobsTable = net.ReadTable()
-	HRP.skillsTable = net.ReadTable()
+	jobsTable = net.ReadTable()
+	skillsTable = net.ReadTable()
 
 	if gui.IsGameUIVisible() then
 		return

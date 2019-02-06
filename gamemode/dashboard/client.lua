@@ -1,4 +1,4 @@
-HRP.AddF4MenuTab("Dashboard", function (panel)
+AddF4MenuTab("Dashboard", function (panel)
 
 	local welcomeMessage = vgui.Create("DPanel", panel)
 	welcomeMessage:SetPos(0, 0)

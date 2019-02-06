@@ -6,9 +6,9 @@ local function JobPanelClick(category, title, rank)
 	net.SendToServer()
 end
 
-HRP.AddF4MenuTab("Jobs", function (panel)
+AddF4MenuTab("Jobs", function (panel)
 	
-	for i = 1, #HRP.jobsTable do
+	for i = 1, #jobsTable do
 		local cat = vgui.Create("DPanel", panel)
 		cat:SetSize(panel:GetWide(), 50)
 		cat:Dock(TOP)
@@ -19,13 +19,13 @@ HRP.AddF4MenuTab("Jobs", function (panel)
 
 			surface.SetFont("buttonFont")
 			surface.SetTextColor(255, 255, 255, 255)
-			local width, height = surface.GetTextSize(HRP.jobsTable[i].title)
+			local width, height = surface.GetTextSize(jobsTable[i].title)
 			surface.SetTextPos(10, (cat:GetTall() / 2) - (height / 2))
-			surface.DrawText(HRP.jobsTable[i].title)
+			surface.DrawText(jobsTable[i].title)
 
 		end
 
-		for j = 1, #HRP.jobsTable[i].jobTitles do
+		for j = 1, #jobsTable[i].jobTitles do
 			local job = vgui.Create("DButton", panel)
 			job:SetSize(panel:GetWide(), 100)
 			job:Dock(TOP)
@@ -42,14 +42,14 @@ HRP.AddF4MenuTab("Jobs", function (panel)
 
 				surface.SetFont("buttonFont")
 				surface.SetTextColor(255, 255, 255, 255)
-				local width, height = surface.GetTextSize(HRP.jobsTable[i].jobTitles[j].title)
+				local width, height = surface.GetTextSize(jobsTable[i].jobTitles[j].title)
 				surface.SetTextPos((job:GetWide() / 2) - (width / 2), 10)
-				surface.DrawText(HRP.jobsTable[i].jobTitles[j].title)
+				surface.DrawText(jobsTable[i].jobTitles[j].title)
 
 			end
 
 			job.DoClick = function()
-				JobPanelClick(HRP.jobsTable[i].title, HRP.jobsTable[i].jobTitles[j].title, HRP.jobsTable[i].jobTitles[j].jobRanks[1].title)
+				JobPanelClick(jobsTable[i].title, jobsTable[i].jobTitles[j].title, jobsTable[i].jobTitles[j].jobRanks[1].title)
 			end
 		end
 	end

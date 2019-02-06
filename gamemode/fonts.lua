@@ -16,6 +16,42 @@ surface.CreateFont("HUD", {
 	outline = false,
 })
 
+surface.CreateFont("DoorUiMoney", {
+	font = "Arial",
+	extended = false,
+	size = 100,
+	weight = 500,
+	blursize = 0,
+	scanlines = 0,
+	antialias = false,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = false,
+	outline = true,
+})
+
+surface.CreateFont("DoorUi", {
+	font = "Arial",
+	extended = false,
+	size = 48,
+	weight = 500,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = false,
+	outline = false,
+})
+
 surface.CreateFont("ExpBar", {
 	font = "Arial",
 	extended = false,
