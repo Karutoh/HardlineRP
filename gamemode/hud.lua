@@ -100,6 +100,16 @@ local function DrawExpBar(x, y, w, h)
     surface.DrawText(exp)
 end
 
+hook.Add("Think", "HRP_HideMdl", function ()
+	if mdl then
+		if gui.IsGameUIVisible() then
+			mdl:Hide()
+		else
+			mdl:Show()
+		end
+	end
+end)
+
 hook.Add("HUDPaint", "HRP_DrawHUD", function ()
     DrawInfo(10, ScrH() - 180, 300, 150)
     DrawExpBar(10, ScrH() - 20, ScrW() - 20, 10)

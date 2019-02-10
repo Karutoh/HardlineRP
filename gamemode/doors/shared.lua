@@ -1,16 +1,16 @@
-DM_FOR_SALE = 1
-DM_UNOWNED = 2
-DM_OWNED = 3
+DS_FOR_SALE = 1
+DS_UNOWNED = 2
+DS_OWNED = 3
 
 function GetDoorStatus(ply, door)
-	local status = DM_FOR_SALE
+	local status = DS_FOR_SALE
 	local owner = door:GetNWString("owner", "")
 				
 	if #owner > 0 then
 		if owner == ply:SteamID64() then
-			status = DM_OWNED
+			status = DS_OWNED
 		else
-			status = DM_UNOWNED
+			status = DS_UNOWNED
 		end
 	end
 	

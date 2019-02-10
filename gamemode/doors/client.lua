@@ -1,10 +1,9 @@
 local doorUiBase = {}
 local doorUi = {}
-doorUi[DM_FOR_SALE] = {}
-doorUi[DM_UNOWNED] = {}
-doorUi[DM_OWNED] = {}
+doorUi[DS_FOR_SALE] = {}
+doorUi[DS_UNOWNED] = {}
+doorUi[DS_OWNED] = {}
 local doors = {}
-local keys = {}
 
 function DoorUiBase(identifier, Render)
 	return {
@@ -44,7 +43,7 @@ function AddDoorUiBase(ui)
 	return true
 end
 
-function AddDoorUi(ui, menu)
+function AddDoorUi(ui, status)
 	for i = 1, #doorUi do
 		if doorUi[i].identifier == ui.identifier then
 			return false
@@ -59,19 +58,9 @@ function AddDoorUi(ui, menu)
 		end
 	end
 	
-	table.insert(doorUi[menu], ui)
+	table.insert(doorUi[status], ui)
 	
 	return true
-end
-
-function WasDoorUiKeyPressed(key)
-	for i = 1, #keys do
-		if keys[i] == key then
-			return true
-		end
-	end
-	
-	return false
 end
 
 include("ui.lua")
@@ -92,45 +81,25 @@ local function CursorPos_Door(pos, angle)
 	return Vector(curP.x, -curP.y)
 end
 
-hook.Add("Think", "HRP_DoorUiInit", function ()
-	if #doors == 0 then
-		local d = ents.FindByClass("prop_door_rotating")
-		
-		for i = 1, #d do
-			local tbl = {
-				id = d[i]:EntIndex(),
-				ui = {}
-			}
-		
-			table.Add(tbl.ui, doorUi[GetDoorStatus(LocalPlayer(), d[i])])
-		
-			table.insert(doors, tbl)
-		end
-	end
-end)
+local function InitDoorUi(door)
+	local tbl = {
+		id = door:EntIndex(),
+		ui = {}
+	}
 
-hook.Add("KeyRelease", "HRP_DoorUiKeys", function (ply, key)
-	if !IsFirstTimePredicted() then
-		return
-	end
+	table.Add(tbl.ui, doorUi[GetDoorStatus(LocalPlayer(), door)])
 
-	for i = 1, #keys do
-		if keys[i] == key then
-			return
-		end
-	end
-	
-	table.insert(keys, key)
-end)
+	table.insert(doors, tbl)
+end
 
 hook.Add("PostDrawTranslucentRenderables", "HRP_DoorUiRender", function (bDepth, bSkybox)
 	if bSkybox then
         return
     end
-    
+	
     local ent = ents.FindByClass("prop_door_rotating")
 
-    for i = 1, #ent do	
+    for i = 1, #ent do
         local dis = LocalPlayer():GetPos():Distance(ent[i]:GetPos())
 
         if dis <= 250 then
@@ -152,17 +121,23 @@ hook.Add("PostDrawTranslucentRenderables", "HRP_DoorUiRender", function (bDepth,
 			local curPos = CursorPos_Door(mat:GetTranslation(), mat:GetAngles())
 			if curPos then
 				cam.Start3D2D(mat:GetTranslation(), mat:GetAngles(), 0.05)
+					local found = false
+				
 					for d = 1, #doors do
 						if doors[d].id == ent[i]:EntIndex() then
+							found = true
+						
 							for u = 1, #doors[d].ui do
 								doors[d].ui[u].base.Render(ent[i], doors[d].ui[u], curPos / 0.05)
 							end
 						end
 					end
+					
+					if !found then
+						InitDoorUi(ent[i])
+					end
 				cam.End3D2D()
 			end
         end
     end
-	
-	table.Empty(keys)
 end)

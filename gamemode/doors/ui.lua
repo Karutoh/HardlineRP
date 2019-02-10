@@ -8,7 +8,13 @@ function (door, ui, curPos)
 	
 	if ui.activator && ui.Activated then
 		if ui.hovering then
-			if WasDoorUiKeyPressed(ui.activator) then
+			if IsKeyDown(ui.activator) then
+				ui.down = true
+			else
+				ui.down = false
+			end
+			
+			if WasKeyPressed(ui.activator) then
 				ui.Activated(door)
 			end
 		end
@@ -19,9 +25,15 @@ function (door, ui, curPos)
 	
 	local color = ui.color || Color(255, 255, 255)
 	if ui.hovering then
-		color.r = color.r / 2
-		color.g = color.g / 2
-		color.b = color.b / 2
+		if ui.down then
+			color.r = color.r / 4
+			color.g = color.g / 4
+			color.b = color.b / 4
+		else
+			color.r = color.r / 2
+			color.g = color.g / 2
+			color.b = color.b / 2
+		end
 	end
 	
 	surface.SetDrawColor(color)
@@ -59,11 +71,11 @@ local cost = DoorUi("Cost", "Text", Vector(170, 0), Vector(250, 80))
 cost.textColor = Color(0, 100, 0)
 cost.font = "DoorUiMoney"
 cost.text = "$400"
-AddDoorUi(cost, DM_FOR_SALE);
+AddDoorUi(cost, DS_FOR_SALE);
 
 local buyButt = DoorUi("Buy", "Button", Vector(170, 100), Vector(250, 80))
-buyButt.activator = IN_ATTACK
+buyButt.activator = KEY_Z
 buyButt.Activated = function (door)
 	chat.AddText("You have bought the door!")
 end
-AddDoorUi(buyButt, DM_FOR_SALE)
+AddDoorUi(buyButt, DS_FOR_SALE)
