@@ -43,7 +43,7 @@ end
 
 function SWEP:PrimaryAttack()
 	local max = self.Owner:GetMaxHealth()
-	local amount = 20 * (self.Owner:GetNWInt("intelligence") / HRP.maxSkillCount:GetInt())
+	local amount = 20 * (self.Owner:GetNWInt("intelligence") / maxSkillCount:GetInt())
 	local newHealth = self.Owner:Health() + amount
 
 	if newHealth > max then newHealth = max end

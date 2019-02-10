@@ -9,6 +9,6 @@ end
 
 function ENT:OnUse(ply)
 	ply:SetNWInt("holding", ply:GetNWInt("holding") + self:GetNWInt("amount"))
-	HRP.NotifyPlayer(ply, "You have picked up $" .. self:GetNWInt("amount") .. "!", 2, "hint")
+	NotifyPlayer(ply, "You have picked up $" .. self:GetNWInt("amount") .. "!", 2, "hint")
 	self:Remove()
 end

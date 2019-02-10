@@ -1,34 +1,22 @@
 local doorUiBase = {}
 local doorUi = {}
+doorUi[DM_FOR_SALE] = {}
+doorUi[DM_UNOWNED] = {}
+doorUi[DM_OWNED] = {}
+local doors = {}
+local keys = {}
 
-DM_FOR_SALE = 1
-DM_UNOWNED = 2
-DM_OWNED = 3
-
-function DoorUiBase(identifier, base, Update, Render)
-	local result = {
+function DoorUiBase(identifier, Render)
+	return {
 		identifier = identifier,
-		base = nil,
-		Update = Update,
 		Render = Render
 	}
-	
-	if base then
-		for i = 1, #doorUiBase do
-			if doorUiBase[i].identifier == base then
-				result.base = doorUiBase[i]
-			end
-		end
-	end
-
-	return result
 end
 
-function DoorUi(identifier, base, doorMenu, pos, scale)
+function DoorUi(identifier, base, pos, scale)
 	local result = {
 		identifier = identifier,
 		base = nil,
-		doorMenu = doorMenu,
 		pos = pos,
 		scale = scale
 	}
@@ -56,7 +44,7 @@ function AddDoorUiBase(ui)
 	return true
 end
 
-function AddDoorUi(ui)
+function AddDoorUi(ui, menu)
 	for i = 1, #doorUi do
 		if doorUi[i].identifier == ui.identifier then
 			return false
@@ -71,38 +59,22 @@ function AddDoorUi(ui)
 		end
 	end
 	
-	table.insert(doorUi, ui)
+	table.insert(doorUi[menu], ui)
 	
 	return true
 end
 
-local function UpdateDoorUi(door, ui, curPos, base)
-	if !base then
-		UpdateDoorUi(door, ui, curPos, ui.base)
-		
-		return
+function WasDoorUiKeyPressed(key)
+	for i = 1, #keys do
+		if keys[i] == key then
+			return true
+		end
 	end
 	
-	if base.base then
-		UpdateDoorUi(door, ui, curPos, base.base)
-	end
-	
-	base.Update(door, ui, curPos)
+	return false
 end
 
-local function RenderDoorUi(door, ui, base)
-	if !base then
-		RenderDoorUi(door, ui, ui.base)
-		
-		return
-	end
-	
-	if base.base then
-		RenderDoorUi(door, ui, base.base)
-	end
-	
-	base.Render(door, ui)
-end
+include("ui.lua")
 
 local function CursorPos_Door(pos, angle)
 	local p = util.IntersectRayWithPlane(LocalPlayer():EyePos(), LocalPlayer():GetAimVector(), pos, angle:Up())
@@ -120,10 +92,45 @@ local function CursorPos_Door(pos, angle)
 	return Vector(curP.x, -curP.y)
 end
 
-hook.Add("Tick", "HRP_DoorUiUpdate", function ()
-	local ent = ents.FindByClass("prop_door_rotating")
+hook.Add("Think", "HRP_DoorUiInit", function ()
+	if #doors == 0 then
+		local d = ents.FindByClass("prop_door_rotating")
+		
+		for i = 1, #d do
+			local tbl = {
+				id = d[i]:EntIndex(),
+				ui = {}
+			}
+		
+			table.Add(tbl.ui, doorUi[GetDoorStatus(LocalPlayer(), d[i])])
+		
+			table.insert(doors, tbl)
+		end
+	end
+end)
 
-    for i = 1, #ent do
+hook.Add("KeyRelease", "HRP_DoorUiKeys", function (ply, key)
+	if !IsFirstTimePredicted() then
+		return
+	end
+
+	for i = 1, #keys do
+		if keys[i] == key then
+			return
+		end
+	end
+	
+	table.insert(keys, key)
+end)
+
+hook.Add("PostDrawTranslucentRenderables", "HRP_DoorUiRender", function (bDepth, bSkybox)
+	if bSkybox then
+        return
+    end
+    
+    local ent = ents.FindByClass("prop_door_rotating")
+
+    for i = 1, #ent do	
         local dis = LocalPlayer():GetPos():Distance(ent[i]:GetPos())
 
         if dis <= 250 then
@@ -144,75 +151,18 @@ hook.Add("Tick", "HRP_DoorUiUpdate", function ()
 			
 			local curPos = CursorPos_Door(mat:GetTranslation(), mat:GetAngles())
 			if curPos then
-				local menu = DM_FOR_SALE
-				local owner = ent[i]:GetNWString("owner", "")
-				
-				if #owner > 0 then
-					if owner == LocalPlayer():SteamID64() then
-						menu = DM_OWNED
-					else
-						menu = DM_UNOWNED
+				cam.Start3D2D(mat:GetTranslation(), mat:GetAngles(), 0.05)
+					for d = 1, #doors do
+						if doors[d].id == ent[i]:EntIndex() then
+							for u = 1, #doors[d].ui do
+								doors[d].ui[u].base.Render(ent[i], doors[d].ui[u], curPos / 0.05)
+							end
+						end
 					end
-				end
-			
-				for c = 1, #doorUi do
-					if menu == doorUi[c].doorMenu then
-						UpdateDoorUi(ent[i], doorUi[c], curPos / 0.05)
-					end
-				end
+				cam.End3D2D()
 			end
         end
     end
+	
+	table.Empty(keys)
 end)
-
-hook.Add("PostDrawTranslucentRenderables", "HRP_DoorUiRender", function (bDepth, bSkybox)
-    if bSkybox then
-        return
-    end
-    
-    local ent = ents.FindByClass("prop_door_rotating")
-
-    for i = 1, #ent do
-        local dis = LocalPlayer():GetPos():Distance(ent[i]:GetPos())
-
-        if dis <= 250 then
-            local ang = ent[i]:GetForward():Dot((ent[i]:GetPos() - LocalPlayer():GetPos()):GetNormalized())
-
-            local pos = Matrix()
-            local rot = Matrix()
-            if ang > 0 then
-                pos:Translate(Vector(-2, 37, 15))
-                rot:Rotate(Angle(0, -90, 90))
-            else
-                pos:Translate(Vector(2, 8, 15))
-                rot:Rotate(Angle(0, 90, 90))
-            end
-
-            local mat = ent[i]:GetWorldTransformMatrix()
-            mat = mat * pos * rot
-			
-			cam.Start3D2D(mat:GetTranslation(), mat:GetAngles(), 0.05)
-				local menu = DM_FOR_SALE
-				local owner = ent[i]:GetNWString("owner", "")
-				
-				if #owner > 0 then
-					if owner == LocalPlayer():SteamID64() then
-						menu = DM_OWNED
-					else
-						menu = DM_UNOWNED
-					end
-				end
-			
-				for c = 1, #doorUi do
-					if menu == doorUi[c].doorMenu then
-						RenderDoorUi(ent[i], doorUi[c])
-					end
-				end
-			cam.End3D2D()
-        end
-    end
-end)
-
---print(LocalPlayer():GetEyeTrace().Entity:GetClass())
-
-include("ui.lua")
